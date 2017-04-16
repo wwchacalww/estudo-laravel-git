@@ -71,7 +71,7 @@
                     <td>
                       <div class="btn-group">
                         @if(Auth::check() && Auth::user()->hasPermission('update.user'))
-                          <a href="#"><button type="button" class="btn btn-info">Edita</button></a>
+                          <a href="{{ url('equipes/'.$equipe->id.'/edit')}}"><button type="button" class="btn btn-info">Editar</button></a>
                         @endif
                       </div>
                     </td>
@@ -104,8 +104,8 @@
   <!-- Bootstrap 3.3.6 -->
   <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
 
-  <!-- MainJs -->
-  <script src="{{ asset('js/main.js') }}"></script>
+  {{-- <!-- MainJs -->
+  <script src="{{ asset('js/main.js') }}"></script> --}}
   <!-- AdminLTE App -->
   <script src="{{ asset('dist/js/app.min.js') }}"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->

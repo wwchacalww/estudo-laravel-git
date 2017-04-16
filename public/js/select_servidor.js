@@ -288,6 +288,31 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('servidor', {
   template: '\n    <option :value="empregado_id" v-if="user_id === null">{{ name }}</option>\n    <option :value="empregado_id" v-else-if="empregado_id === user_edit" selected="selected">{{ name }}</option>\n    <option :value="empregado_id" v-else disabled="disabled" >{{ name }}</option>\n  '
 
 });
+//EquipesComponent
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('equipes', {
+
+  props: ['equipe_edit'],
+  template: '\n  <select class="form-control select2" style="width: 100%;" name="empregado_id">\n    <equipe v-for="task in tasks" :name="task.name" :empregado_id="task.id" :membro_equipe="task.equipe" :equipe_edit="equipe_edit"></equipe>\n  </select>\n  ',
+
+  data: function data() {
+    return {
+      tasks: []
+    };
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    axios.get('/empregados/apiEquipe').then(function (response) {
+      return _this2.tasks = response.data;
+    });
+  }
+});
+
+//EquipeComponet
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('equipe', {
+  props: ['empregado_id', 'name', 'equipe_edit', 'membro_equipe'],
+  template: '\n    <option :value="empregado_id" v-if="membro_equipe === null">{{ name }}</option>\n    <option :value="empregado_id" v-else-if="empregado_id === equipe_edit" selected="selected">{{ name }}</option>\n    <option :value="empregado_id" v-else disabled="disabled" >{{ name }}</option>\n  '
+});
 new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
   el: '#formulario'
 });

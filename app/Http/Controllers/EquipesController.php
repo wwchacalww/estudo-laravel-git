@@ -58,7 +58,8 @@ class EquipesController extends Controller
      */
     public function edit(Equipe $equipe)
     {
-        //
+
+        return view('equipes.edit',['equipe'=>$equipe]);
     }
 
     /**
@@ -70,7 +71,12 @@ class EquipesController extends Controller
      */
     public function update(Request $request, Equipe $equipe)
     {
-        //
+        $data = $request->all();
+        $equipe->empregado_id = $data['empregado_id'];
+        $servidor = \App\Empregado::find($equipe->empregado_id);
+        $equipe->user_id = $servidor->user_id;
+        $equipe->update();
+        return redirect()->route('equipes.index');
     }
 
     /**

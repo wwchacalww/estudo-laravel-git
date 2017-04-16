@@ -47,12 +47,13 @@ Route::group(['as'=>'ocorrencias.', 'prefix'=>'ocorrencias','middleware'=>['auth
 Route::group(['as'=>'empregados.', 'prefix'=>'empregados','middleware'=>['auth','acl']], function(){
   Route::get('', ['as'=>'index', 'uses'=>'EmpregadosController@index', 'can'=>'view.servidor']);
   Route::get('apiServidor', ['as'=>'apiServidor', 'uses'=>'EmpregadosController@apiServidor','can'=>'view.servidor']);
+  Route::get('apiEquipe', ['as'=>'apiEquipe', 'uses'=>'EmpregadosController@apiEquipe','can'=>'view.servidor']);
   Route::get('{empregado}/show', ['as'=>'show', 'uses'=>'EmpregadosController@show', 'is'=>'administrador|diretor|administrativo']);
   Route::get('{empregado}/status',['as'=>'status', 'uses'=>'EmpregadosController@status','is'=>'administrador|diretor|administrativo']);
   Route::get('create', ['as'=>'create','uses'=>'EmpregadosController@create','is'=>'administrador|diretor|administrativo']);
   Route::post('store',['as'=>'store', 'uses'=>'EmpregadosController@store', 'is'=>'administrador|diretor|administrativo']);
   Route::get('{empregado}/edit',['as'=>'edit','uses'=>'EmpregadosController@edit', 'is'=>'administrador|diretor|administrativo']);
-  Route::put('{empregado}/update',['as'=>'edit', 'uses' => 'EmpregadosController@update', 'is'=>'administrador|diretor|administrativo']);
+  Route::put('{empregado}/update',['as'=>'update', 'uses' => 'EmpregadosController@update', 'is'=>'administrador|diretor|administrativo']);
   Route::get('{empregado}/namo', ['as'=>'namo','uses'=>'EmpregadosController@namo','can'=>'view.servidor']);
   Route::post('{empregado}/ponto',['as'=>'ponto', 'uses'=>'EmpregadosController@ponto','is'=>'administrador|diretor|administrativo']);
 });
@@ -60,4 +61,7 @@ Route::group(['as'=>'empregados.', 'prefix'=>'empregados','middleware'=>['auth',
 //Equipe
 Route::group(['as'=>'equipes.','prefix'=>'equipes','middleware'=>['auth','acl']], function(){
   Route::get('',['as'=>'index', 'uses'=>'EquipesController@index','is'=>'administrador|diretor|administrativo']);
+  Route::get('{equipe}/edit', ['as'=>'edit', 'uses'=>'EquipesController@edit','is'=>'administrador|diretor|administrativo']);
+  Route::put('{equipe}/update',['as'=>'update', 'uses' => 'EquipesController@update', 'is'=>'administrador|diretor|administrativo']);
+
 });

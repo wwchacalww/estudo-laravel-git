@@ -124,6 +124,14 @@ class EmpregadosController extends Controller
     public function apiServidor()
     {
       $servidores = Empregado::all();
+
+      return $servidores;
+    }
+
+    public function apiEquipe()
+    {
+      $servidores = Empregado::with('equipe')->get();
+
       return $servidores;
     }
 
