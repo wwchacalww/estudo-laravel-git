@@ -65,3 +65,9 @@ Route::group(['as'=>'equipes.','prefix'=>'equipes','middleware'=>['auth','acl']]
   Route::put('{equipe}/update',['as'=>'update', 'uses' => 'EquipesController@update', 'is'=>'administrador|diretor|administrativo']);
 
 });
+
+//Horario
+Route::group(['as'=>'horarios.','prefix'=>'horarios','middleware'=>['auth','acl']], function(){
+  Route::get('cargas', ['as'=>'cargas.index', 'uses'=>'CargasController@index', 'can'=>'view.turma']);
+  Route::post('cargas/store',['as'=>'cargas.store', 'uses'=>'CargasController@store', 'is'=>'administrador|diretor|administrativo']);
+});

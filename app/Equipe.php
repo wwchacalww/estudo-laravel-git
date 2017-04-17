@@ -19,4 +19,9 @@ class Equipe extends Model
   {
     return $this->belongsTo('App\Empregado');
   }
+
+  public function ocorrencias()
+  {
+    return $this->hasMany('App\Ocorrencia');
+  }
 }
