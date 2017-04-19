@@ -19,4 +19,9 @@ class Empregado extends Model
   {
     return $this->hasOne('App\Equipe');
   }
+
+  public function professor()
+  {
+    return $this->hasOne('App\Professor');
+  }
 }

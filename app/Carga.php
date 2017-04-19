@@ -9,4 +9,9 @@ class Carga extends Model
   protected $fillable = [
       'carga', 'ch',
   ];
+
+  public function professor()
+  {
+    return $this->belongsTo('App\Professor');
+  }
 }

@@ -40,6 +40,7 @@
           <li><a href="{{ route('users.index')}}"><i class="fa fa-user"></i> Lista</a></li>
         </ul>
       </li>
+      <!-- Menu Turmas -->
       @if(Auth::check() && Auth::user()->hasPermission('view.turma'))
         <li class="treeview">
           <a href="{{route('turmas.index')}}">
@@ -47,6 +48,7 @@
           </a>
         </li>
       @endif
+      <!-- Menu Disciplinar -->
       @if(Auth::check() && Auth::user()->hasPermission('create.disciplinar'))
         <li class="treeview">
           <a href="{{route('ocorrencias.index')}}">
@@ -54,6 +56,7 @@
           </a>
         </li>
       @endif
+      <!-- Menu Servidor -->
       @if(Auth::check() && Auth::user()->hasPermission('view.servidor'))
         <li class="treeview">
           <a href="#">
@@ -71,11 +74,30 @@
           </ul>
         </li>
       @endif
+      <!-- Menu Equipe -->
       @if(Auth::check() && Auth::user()->isRole('administrador|diretor|administrativo'))
         <li class="treeview">
           <a href="{{route('equipes.index')}}">
             <i class="fa fa-gears"></i> <span>Equipe</span>
           </a>
+        </li>
+      @endif
+      <!-- Menu Horario -->
+      @if(Auth::check() && Auth::user()->hasPermission('view.servidor'))
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-clock-o"></i> <span>Horario</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            @if(Auth::check() && Auth::user()->hasPermission('create.servidor'))
+              <li class="active"><a href="{{ route('horarios.cargas.index')}}"><i class="fa fa-battery-half"></i> Cargas</a></li>
+            @endif
+            {{-- <li><a href="{{ route('empregados.index')}}"><i class="fa fa-list"></i> Lista</a></li> --}}
+
+          </ul>
         </li>
       @endif
       {{--
