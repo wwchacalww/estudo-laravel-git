@@ -313,7 +313,59 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('equipe', {
   props: ['empregado_id', 'name', 'equipe_edit', 'membro_equipe'],
   template: '\n    <option :value="empregado_id" v-if="membro_equipe === null">{{ name }}</option>\n    <option :value="empregado_id" v-else-if="empregado_id === equipe_edit" selected="selected">{{ name }}</option>\n    <option :value="empregado_id" v-else disabled="disabled" >{{ name }}</option>\n  '
 });
-new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
+
+//ProfessorsComponent
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('professors', {
+
+  props: ['professor_edit'],
+  template: '\n  <select class="form-control select2" style="width: 100%;" name="empregado_id">\n    <professor v-for="task in tasks" :name="task.name" :empregado_id="task.id" :professor="task.professor" :professor_edit="professor_edit"></professor>\n  </select>\n  ',
+
+  data: function data() {
+    return {
+      tasks: []
+    };
+  },
+  mounted: function mounted() {
+    var _this3 = this;
+
+    axios.get('/empregados/apiProfessor').then(function (response) {
+      return _this3.tasks = response.data;
+    });
+  }
+});
+
+//ProfessorComponent
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('professor', {
+  props: ['empregado_id', 'name', 'professor_edit', 'professor'],
+  template: '\n    <option :value="empregado_id" v-if="professor === null">{{ name }}</option>\n    <option :value="empregado_id" v-else-if="empregado_id === professor_edit" selected="selected">{{ name }}</option>\n    <option :value="empregado_id" v-else disabled="disabled" >{{ name }}</option>\n  '
+});
+
+//DisciplinasComponent
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('disciplinas', {
+
+  props: ['disciplina_edit'],
+  template: '\n  <select class="form-control select2" style="width: 100%;" name="professor_id">\n    <disciplina v-for="task in tasks" :professor="task.professor" :professor_id="task.id" :disciplina_edit="disciplina_edit"></disciplina>\n  </select>\n  ',
+
+  data: function data() {
+    return {
+      tasks: []
+    };
+  },
+  mounted: function mounted() {
+    var _this4 = this;
+
+    axios.get('/horarios/apiProfessor').then(function (response) {
+      return _this4.tasks = response.data;
+    });
+  }
+});
+
+//DisciplinaComponent
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('disciplina', {
+  props: ['professor_id', 'professor', 'disciplina_edit'],
+  template: '\n    <option :value="professor_id" v-if="professor_id === disciplina_edit" selected="selected">{{ professor }}</option>\n    <option :value="professor_id" v-else >{{ professor }}</option>\n  '
+});
+var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
   el: '#formulario'
 });
 

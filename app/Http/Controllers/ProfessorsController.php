@@ -14,7 +14,8 @@ class ProfessorsController extends Controller
      */
     public function index()
     {
-        //
+        $professors = Professor::all();
+        return view('professors.index',['professors'=>$professors]);
     }
 
     /**
@@ -35,7 +36,15 @@ class ProfessorsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $this->validate( request(),[
+          'professor' => 'required|min:3|max:255',
+          'habilidade' => 'required|max:35',
+          'sexo' => 'required',
+          'empregado_id' => 'required'
+      ]);
+      $data = $request->all();
+      $professor = Professor::create($data);
+      return redirect()->route('horarios.professors.index');
     }
 
     /**
@@ -81,5 +90,12 @@ class ProfessorsController extends Controller
     public function destroy(Professor $professor)
     {
         //
+    }
+
+    public function apiProfessor()
+    {
+      $professors = Professor::all();
+
+      return $professors;
     }
 }

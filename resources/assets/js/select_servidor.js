@@ -66,6 +66,75 @@ Vue.component('equipe', {
     <option :value="empregado_id" v-else disabled="disabled" >{{ name }}</option>
   `
 });
-new Vue({
+
+//ProfessorsComponent
+Vue.component('professors', {
+
+  props:['professor_edit'],
+  template: `
+  <select class="form-control select2" style="width: 100%;" name="empregado_id">
+    <professor v-for="task in tasks" :name="task.name" :empregado_id="task.id" :professor="task.professor" :professor_edit="professor_edit"></professor>
+  </select>
+  `,
+
+  data(){
+    return {
+      tasks: [
+
+      ]
+    }
+  },
+
+
+  mounted(){
+    axios.get('/empregados/apiProfessor').then(response => this.tasks = response.data);
+  }
+});
+
+
+//ProfessorComponent
+Vue.component('professor', {
+  props: ['empregado_id','name','professor_edit','professor'],
+  template: `
+    <option :value="empregado_id" v-if="professor === null">{{ name }}</option>
+    <option :value="empregado_id" v-else-if="empregado_id === professor_edit" selected="selected">{{ name }}</option>
+    <option :value="empregado_id" v-else disabled="disabled" >{{ name }}</option>
+  `
+});
+
+//DisciplinasComponent
+Vue.component('disciplinas', {
+
+  props:['disciplina_edit'],
+  template: `
+  <select class="form-control select2" style="width: 100%;" name="professor_id">
+    <disciplina v-for="task in tasks" :professor="task.professor" :professor_id="task.id" :disciplina_edit="disciplina_edit"></disciplina>
+  </select>
+  `,
+
+  data(){
+    return {
+      tasks: [
+
+      ]
+    }
+  },
+
+
+  mounted(){
+    axios.get('/horarios/apiProfessor').then(response => this.tasks = response.data);
+  }
+});
+
+
+//DisciplinaComponent
+Vue.component('disciplina', {
+  props: ['professor_id','professor','disciplina_edit'],
+  template: `
+    <option :value="professor_id" v-if="professor_id === disciplina_edit" selected="selected">{{ professor }}</option>
+    <option :value="professor_id" v-else >{{ professor }}</option>
+  `
+});
+var app = new Vue({
   el: '#formulario'
 });

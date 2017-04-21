@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProfessorsTable extends Migration
+class CreateDisciplinasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateProfessorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('professors', function (Blueprint $table) {
+        Schema::create('disciplinas', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('professor');
+            $table->string('disciplina');
             $table->string('habilidade');
-            $table->enum('sexo',['Professor','Professora']);
-            $table->integer('empregado_id')->unsigned()->nullable();
-            $table->foreign('empregado_id')->references('id')->on('empregados');
+            $table->string('cor');
+            $table->integer('ano')->default(date('Y'));
+            $table->integer('professor_id')->unsigned()->nullable();
+            $table->foreign('professor_id')->references('id')->on('professors');
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ class CreateProfessorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('professors');
+        Schema::dropIfExists('disciplinas');
     }
 }

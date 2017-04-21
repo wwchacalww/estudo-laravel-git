@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Professor extends Model
 {
   protected $fillable = [
-      'professor', 'habilidade', 'sexo', 'empregado_id',
+      'professor', 'habilidade', 'sexo', 'empregado_id', 'ano',
   ];
 
   public function empregado()
@@ -18,5 +18,10 @@ class Professor extends Model
   public function cargas()
   {
     return $this->hasMany('App\Carga');
+  }
+
+  public function disciplinas()
+  {
+    return $this->hasMany('App\Disciplina');
   }
 }

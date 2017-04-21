@@ -1,0 +1,36 @@
+[33mcommit 526111f8fd0c3cba44e73361781f2ff89033c658[m
+Author: Chacal Cartaxo <juniorcartaxo@gmail.com>
+Date:   Tue Apr 18 21:04:14 2017 -0300
+
+    Fase de Implementação Professores
+
+[33mcommit d8395f3c300870800dc3ba15b307d3abc47ef7b9[m
+Author: Chacal Cartaxo <juniorcartaxo@gmail.com>
+Date:   Mon Apr 17 11:28:57 2017 -0300
+
+    Implementação de Cargas - Estágio 1
+
+[33mcommit 34c5328e87645b5fd0b34b6671c5835bb962535b[m
+Author: Chacal Cartaxo <juniorcartaxo@gmail.com>
+Date:   Sun Apr 16 19:00:34 2017 -0300
+
+    Implementação de Equipes
+
+[33mcommit f6ebf2666fc29d7add3d4a5363261da107860f55[m
+Merge: 03912d6 c590851
+Author: Chacal Cartaxo <juniorcartaxo@gmail.com>
+Date:   Thu Apr 13 11:00:23 2017 -0300
+
+    Merge branch 'master' of https://github.com/wwchacalww/estudo-laravel-git
+
+[33mcommit 03912d62e2599631db290fa1454074172aa8ef35[m
+Author: Chacal Cartaxo <juniorcartaxo@gmail.com>
+Date:   Thu Apr 13 10:55:13 2017 -0300
+
+    Instalar Laravel CEF
+
+[33mcommit c590851bc9625b9770bd113ad047b62ed5fc2ae9[m
+Author: wwchacalww <juniorcartaxo@gmail.com>
+Date:   Thu Apr 13 09:18:46 2017 -0300
+
+    Initial commit

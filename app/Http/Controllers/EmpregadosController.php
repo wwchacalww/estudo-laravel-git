@@ -134,6 +134,12 @@ class EmpregadosController extends Controller
 
       return $servidores;
     }
+    public function apiProfessor()
+    {
+      $servidores = Empregado::with('professor')->get();
+
+      return $servidores;
+    }
 
     public function status(Empregado $empregado)
     {

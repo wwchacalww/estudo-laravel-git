@@ -48,6 +48,7 @@ Route::group(['as'=>'empregados.', 'prefix'=>'empregados','middleware'=>['auth',
   Route::get('', ['as'=>'index', 'uses'=>'EmpregadosController@index', 'can'=>'view.servidor']);
   Route::get('apiServidor', ['as'=>'apiServidor', 'uses'=>'EmpregadosController@apiServidor','can'=>'view.servidor']);
   Route::get('apiEquipe', ['as'=>'apiEquipe', 'uses'=>'EmpregadosController@apiEquipe','can'=>'view.servidor']);
+  Route::get('apiProfessor', ['as'=>'apiProfessor', 'uses'=>'EmpregadosController@apiProfessor','can'=>'view.servidor']);
   Route::get('{empregado}/show', ['as'=>'show', 'uses'=>'EmpregadosController@show', 'is'=>'administrador|diretor|administrativo']);
   Route::get('{empregado}/status',['as'=>'status', 'uses'=>'EmpregadosController@status','is'=>'administrador|diretor|administrativo']);
   Route::get('create', ['as'=>'create','uses'=>'EmpregadosController@create','is'=>'administrador|diretor|administrativo']);
@@ -72,4 +73,9 @@ Route::group(['as'=>'horarios.','prefix'=>'horarios','middleware'=>['auth','acl'
   Route::post('cargas/store',['as'=>'cargas.store', 'uses'=>'CargasController@store', 'is'=>'administrador|diretor|administrativo']);
   Route::get('professors', ['as'=>'professors.index', 'uses'=>'ProfessorsController@index', 'can'=>'view.turma']);
   Route::post('professors/store',['as'=>'professors.store', 'uses'=>'ProfessorsController@store', 'is'=>'administrador|diretor|administrativo']);
+  Route::get('apiProfessor', ['as'=>'apiProfessor', 'uses'=>'ProfessorsController@apiProfessor','can'=>'view.servidor']);
+  Route::get('disciplinas', ['as'=>'disciplinas.index', 'uses'=>'DisciplinasController@index', 'can'=>'view.turma']);
+  Route::post('disciplinas/store',['as'=>'disciplinas.store', 'uses'=>'DisciplinasController@store', 'is'=>'administrador|diretor|administrativo']);
+  Route::get('disciplinas/{disciplina}/edit',['as'=>'edit','uses'=>'DisciplinasController@edit', 'is'=>'administrador|diretor|administrativo']);
+  Route::put('disciplinas/{disciplina}/update',['as'=>'update','uses'=>'DisciplinasController@update', 'is'=>'administrador|diretor|administrativo']);
 });
