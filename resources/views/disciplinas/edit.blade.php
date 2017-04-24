@@ -25,7 +25,7 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="{{ route('home') }}"><i class="fa fa-dashboard"></i> Direção</a></li>
-    <li><a href="{{ route('users.index') }}"><i class="fa fa-clock-o"></i> Horario</a></li>
+    <li><a href="{{ route('horarios.disciplinas.index') }}"><i class="fa fa-clock-o"></i> Horario</a></li>
     <li>Disciplinas</li>
   </ol>
 @endsection

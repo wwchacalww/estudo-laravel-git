@@ -22,7 +22,8 @@
   <ol class="breadcrumb">
     <li><a href="{{ route('home') }}"><i class="fa fa-dashboard"></i> Direção</a></li>
     <li><a href="{{ route('horarios.cargas.index') }}"><i class="fa fa-clock-o"></i> Horario</a></li>
-    <li>Cargas</li>
+    <li><a href="{{ route('horarios.cargas.index') }}"><i class="fa fa-battery-half"></i> Cargas</a></li>
+    <li>Editar Carga</li>
   </ol>
 @endsection
 
@@ -76,7 +77,6 @@
                 <td>
                   <a href="{{url('/horarios/cargas/'.$carga->id.'/edit')}}"><button type="button" name="button" class="btn btn-warning pull-right">Editar</button></a>
                 </td>
-
               </tr>
             @endforeach
 
@@ -91,9 +91,9 @@
   <!-- Coluna da Direitra  Indisciplinas -->
   <div class="col-lg-5 connectedSortable">
 
-          <div class="box box-danger box-solid" id="formulario">
+          <div class="box box-success box-solid" id="formulario">
             <div class="box-header with-border">
-              <h3 class="box-title">Nova Carga</h3>
+              <h3 class="box-title">Editar Carga {{ $carga_edit->carga }}</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -107,27 +107,36 @@
               @if(Auth::check() && Auth::user()->isRole('administrativo|diretor|administrador'))
                 @include('layouts.errors')
 
-                {!! Form::open(['route'=>'horarios.cargas.store','method' => 'post']) !!}
+                {!! Form::open(['url'=>'horarios/cargas/'.$carga_edit->id.'/update','method' => 'put']) !!}
 
                   <div class="form-group">
                     <label for="carga">Carga</label>
-                    <input type="text" class="form-control" name="carga" >
+                    <input type="text" class="form-control" name="carga" value="{{$carga_edit->carga}}" >
                   </div>
                   <div class="form-group">
                     <label for="carga">CH</label>
-                    <input type="text" class="form-control" name="ch" >
+                    <input type="text" class="form-control" name="ch" value="{{ $carga_edit->ch }}" >
                   </div>
 
                   <div class="form-group">
                     <label>Professor</label>
-                    <disciplinas :disciplina_edit="0"></disciplinas>
+                    @if($carga_edit->professor_id == null)
+                        <disciplinas :disciplina_edit="0"></disciplinas>
+                    @else
+                        <disciplinas :disciplina_edit="{{ $carga_edit->professor_id }}"></disciplinas>
+                    @endif
+
                   </div>
 
                   <div class="form-group">
                     <label>Turmas</label>
                     <select class="form-control select2" multiple="multiple" data-placeholder="Selecione uma Turma" style="width: 100%;" name="turmas[]" required="required">
                       @foreach($turmas as $key => $value)
-                        <option value="{{ $value }}">{{$key}}</option>
+                        @if(in_array($value, $enturmado))
+                          <option value="{{ $value }}" selected="selected">{{$key}}</option>
+                        @else
+                          <option value="{{ $value }}">{{$key}}</option>
+                        @endif
                       @endforeach
                     </select>
                   </div>

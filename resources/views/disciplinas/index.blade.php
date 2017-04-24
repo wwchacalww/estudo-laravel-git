@@ -130,6 +130,7 @@
                 </div>
                 <!-- /.input group -->
               </div>
+
               <div class="form-group">
                 <label>Professor</label>
                 <disciplinas :disciplina_edit="0"></disciplinas>

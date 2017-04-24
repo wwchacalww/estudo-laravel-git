@@ -19,4 +19,10 @@ class Turma extends Model
     {
         return $this->belongsToMany('App\Disciplina');
     }
+
+    public function cargas()
+    {
+        return $this->belongsToMany('App\Carga');
+    }
+
 }

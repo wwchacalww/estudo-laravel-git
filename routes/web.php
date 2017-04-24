@@ -71,11 +71,13 @@ Route::group(['as'=>'equipes.','prefix'=>'equipes','middleware'=>['auth','acl']]
 Route::group(['as'=>'horarios.','prefix'=>'horarios','middleware'=>['auth','acl']], function(){
   Route::get('cargas', ['as'=>'cargas.index', 'uses'=>'CargasController@index', 'can'=>'view.turma']);
   Route::post('cargas/store',['as'=>'cargas.store', 'uses'=>'CargasController@store', 'is'=>'administrador|diretor|administrativo']);
+  Route::get('cargas/{carga}/edit', ['as'=>'cargas.edit', 'uses'=>'CargasController@edit', 'is'=>'administrador|diretor|administrativo']);
+  Route::put('cargas/{carga}/update', ['as'=>'cargas.update', 'uses'=>'CargasController@update', 'is'=>'administrador|diretor|administrativo']);
   Route::get('professors', ['as'=>'professors.index', 'uses'=>'ProfessorsController@index', 'can'=>'view.turma']);
   Route::post('professors/store',['as'=>'professors.store', 'uses'=>'ProfessorsController@store', 'is'=>'administrador|diretor|administrativo']);
   Route::get('apiProfessor', ['as'=>'apiProfessor', 'uses'=>'ProfessorsController@apiProfessor','can'=>'view.servidor']);
   Route::get('disciplinas', ['as'=>'disciplinas.index', 'uses'=>'DisciplinasController@index', 'can'=>'view.turma']);
   Route::post('disciplinas/store',['as'=>'disciplinas.store', 'uses'=>'DisciplinasController@store', 'is'=>'administrador|diretor|administrativo']);
-  Route::get('disciplinas/{disciplina}/edit',['as'=>'edit','uses'=>'DisciplinasController@edit', 'is'=>'administrador|diretor|administrativo']);
-  Route::put('disciplinas/{disciplina}/update',['as'=>'update','uses'=>'DisciplinasController@update', 'is'=>'administrador|diretor|administrativo']);
+  Route::get('disciplinas/{disciplina}/edit',['as'=>'disciplinas.edit','uses'=>'DisciplinasController@edit', 'is'=>'administrador|diretor|administrativo']);
+  Route::put('disciplinas/{disciplina}/update',['as'=>'disciplinas.update','uses'=>'DisciplinasController@update', 'is'=>'administrador|diretor|administrativo']);
 });
