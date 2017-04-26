@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Ocorrencia extends Model
 {
   protected $fillable = [
-      'tipo', 'descricao', 'status', 'equipe_id'
+      'tipo', 'descricao', 'status', 'equipe_id', 'professor_id'
   ];
 
   public function alunos()
@@ -23,5 +23,10 @@ class Ocorrencia extends Model
   public function equipe()
   {
     return $this->belongsTo('App\Equipe');
+  }
+
+  public function professor()
+  {
+    return $this->belongsTo('App\Professor');
   }
 }

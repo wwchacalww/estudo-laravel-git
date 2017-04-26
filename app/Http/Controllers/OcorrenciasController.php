@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Ocorrencia;
+use App\Carga;
+use App\Equipe;
 use App\Indisciplina;
 use Illuminate\Http\Request;
+
 
 class OcorrenciasController extends Controller
 {
@@ -15,9 +18,11 @@ class OcorrenciasController extends Controller
      */
     public function index()
     {
-        $indisciplinas = Indisciplina::all();
+        $indisciplinas = Indisciplina::whereNotNull('base')->orderBy('base')->get();
         $ocorrencias = Ocorrencia::all();
-        return view('disciplinar.index',['ocorrencias'=>$ocorrencias, 'indisciplinas'=>$indisciplinas]);
+        $cargas = Carga::all();
+        $equipes = Equipe::whereNotNull('empregado_id')->get();
+        return view('disciplinar.index',['ocorrencias'=>$ocorrencias, 'indisciplinas'=>$indisciplinas, 'base' => 0,  'cargas' => $cargas, 'equipes'=>$equipes]);
     }
 
     /**
@@ -38,7 +43,27 @@ class OcorrenciasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $this->validate( request(),[
+          'alunos' => 'required',
+          'professor_id' =>'required|integer',
+          'equipe_id' => 'required|integer',
+          'tipo' => 'required',
+          'indisciplinas' => 'required',
+          'descricao' => 'required'
+      ]);
+
+      $data = $request->all();
+
+      $ocorrencia = Ocorrencia::create($data);
+
+      // Anexando os Alunos
+      $ocorrencia->alunos()->attach($data['alunos']);
+
+      // Anexando Indisciplinas
+      $ocorrencia->indisciplinas()->attach($data['indisciplinas']);
+
+
+      return redirect()->route('ocorrencias.index');
     }
 
     /**

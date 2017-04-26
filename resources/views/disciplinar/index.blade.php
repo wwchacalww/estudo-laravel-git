@@ -6,8 +6,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-
-    <!-- Theme style -->
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{asset('plugins/select2/select2.min.css')}}">
+  <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.min.css')}}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
@@ -28,9 +29,11 @@
 <div class="row">
   <!-- Coluna da Esquerda  Ocorrencias -->
   <div class="col-lg-7 connectedSortable">
+    @if(Auth::check() && Auth::user()->hasPermission('create.disciplinar'))
+
     <div class="box box-warning box-solid">
       <div class="box-header with-border">
-        <h3 class="box-title">Ocorrências</h3>
+        <h3 class="box-title">Nova Ocorrência</h3>
 
         <div class="box-tools pull-right">
           <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -39,11 +42,89 @@
         <!-- /.box-tools -->
       </div>
       <!-- /.box-header -->
-      <div class="box-body">
-        The body of the box
+      <div class="box-body" >
+        @include('layouts.errors')
+        {!! Form::open(['route'=>'ocorrencias.store', 'method'=>'post']) !!}
+        <div class="form-group">
+          <label for="alunos">Aluno</label>
+          {{-- <alunos aluno_edit="0"></alunos> --}}
+          <select class="form-control select2" id="aluno_select" multiple="multiple" data-placeholder="Alunos" style="width: 100%;" name="alunos[]" required="required">
+          </select>
+
+        </div>
+
+        <div class="form-group">
+          <label for="professor">Professor</label>
+          <select class="form-control select2" id="professor_select" style="width: 100%;" name="professor_id" >
+            <option></option>
+            @foreach($cargas as $carga )
+              <option value="{{$carga->professor_id}}">
+                {{$carga->professor->professor}} -
+                @foreach($carga->professor->disciplinas as $disciplina)
+                  {{ $disciplina->disciplina }}
+                @endforeach
+              </option>
+            @endforeach
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="professor">Membro da Direção</label>
+          <select class="form-control select2" id="equipe_select" style="width: 100%;" name="equipe_id" required="required" >
+            <option></option>
+            @foreach($equipes as $equipe )
+              <option value="{{$equipe->id}}">{{$equipe->funcao}}</option>
+            @endforeach
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="professor">Medida Disciplinar</label>
+          <select class="form-control" name="tipo" required="required" >
+              <option>Advertência Oral</option>
+              <option>Advertência Escrita</option>
+              <option>Supensão</option>
+              <option>Termo de Compromisso</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="professor">Infrações</label>
+          <select class="form-control select2" id="indisciplina_select" multiple="multiple" data-placeholder="Infrações" style="width: 100%;" name="indisciplinas[]" >
+            @foreach($indisciplinas as $indisciplina)
+              @if($base === 0)
+                <?php
+                  $base = $indisciplina->base;
+                ?>
+                <optgroup label="{{$base}}">
+                  <option value="{{$indisciplina->id}}">{{$indisciplina->indisciplina}}</option>
+              @elseif($base !== $indisciplina->base)
+                <?php $base = $indisciplina->base; ?>
+                </optgroup>
+                <optgroup label="{{$indisciplina->base}} {{$base}}">
+                  <option value="{{$indisciplina->id}}">{{$indisciplina->indisciplina}}</option>
+              @else
+                  <option value="{{$indisciplina->id}}">{{$indisciplina->indisciplina}}</option>
+              @endif
+            @endforeach
+            </optgroup>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="descricao">Descrição dos Fatos</label>
+          <textarea name="descricao" rows="3"class="form-control" required="required"></textarea>
+        </div>
+
+        <div class="box-footer">
+          <button type="submit" class="btn btn-primary">Salvar</button>
+        </div>
+
+        </form>
       </div>
       <!-- /.box-body -->
     </div>
+    @endif
     <!-- /.box -->
   </div>
   <!-- /Coluna da Esquerda -->
@@ -128,11 +209,67 @@
   </script>
   <!-- Bootstrap 3.3.6 -->
   <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
-
-
+  <!-- Select2 -->
+  <script src="{{asset('plugins/select2/select2.full.min.js')}}"></script>
   <!-- AdminLTE App -->
   <script src="{{ asset('dist/js/app.min.js') }}"></script>
-  <
   <!-- AdminLTE for demo purposes -->
   <script src="{{ asset('dist/js/demo.js') }}"></script>
+  <!-- Page script -->
+  <script>
+
+    $(function () {
+      //Initialize Select2 Elements
+
+      $("#aluno_select").select2({
+        ajax: {
+          url: "{{url('alunos/apiSelectAluno')}}",
+          dataType: 'json',
+          delay: 250,
+          data: function (params) {
+            return {
+              q: params.term, // search term
+              //page: params.page
+            };
+          },
+          processResults: function (data, params) {
+            // parse the results into the format expected by Select2
+            // since we are using custom formatting functions we do not need to
+            // alter the remote JSON data, except to indicate that infinite
+            // scrolling can be used
+          //  params.page = params.page || 1;
+
+            return {
+              results: data.items,
+
+            };
+          },
+          cache: true
+        },
+        // escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+        // minimumInputLength: 1,
+        // templateResult: formatRepo, // omitted for brevity, see the source of this page
+        // templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+      });
+
+      $("#professor_select").select2({
+        placeholder: "Selecione um Professor",
+        allowClear: true
+      });
+
+      $("#equipe_select").select2({
+        placeholder: "Selecione um Membro da Direção",
+        allowClear: true
+      });
+
+      $("#indisciplina_select").select2({
+        placeholder: "Selecione um Membro da Direção",
+        allowClear: true
+      });
+
+    });
+
+
+
+  </script>
 @endsection

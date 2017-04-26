@@ -99,7 +99,7 @@ class CargasController extends Controller
       $data = $request->all();
 
       $carga->update($data);
-      
+
       // Registrando turmas
       $carga->turmas()->detach();
       $carga->turmas()->attach($data['turmas']);
@@ -116,5 +116,24 @@ class CargasController extends Controller
     public function destroy(Carga $carga)
     {
         //
+    }
+
+    public function teste()
+    {
+      $cargas = Carga::all();
+      foreach ($cargas as $carga) {
+        $carga->turmas()->detach();
+        $carga_turmas = array();
+        foreach ($carga->professor->disciplinas as $disciplina) {
+          foreach ($disciplina->Turmas as $turma) {
+            if (!in_array($turma->id, $carga_turmas)) {
+              $carga_turmas[] = $turma->id;
+            }
+          }
+        }
+        $carga->turmas()->attach($carga_turmas);
+      }
+
+      return 'oi';
     }
 }

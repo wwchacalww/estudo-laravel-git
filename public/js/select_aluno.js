@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 169);
+/******/ 	return __webpack_require__(__webpack_require__.s = 172);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -255,7 +255,7 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 163:
+/***/ 166:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -264,20 +264,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 
 
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('task', {
-  template: '<li>Foobar</li>'
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('alunos', {
+
+  props: ['aluno_edit'],
+  template: '\n  <select class="form-control select2" multiple="multiple" data-placeholder="Digite o nome do aluno" style="width: 100%;" name="alunos[]">\n    <aluno v-for="task in tasks" :name="task.nome +\' - \'+  task.turma.turma " :aluno_id="task.id" :aluno_edit="aluno_edit"></aluno>\n  </select>\n  ',
+
+  data: function data() {
+    return {
+      tasks: []
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/alunos/apiSelectAluno').then(function (response) {
+      return _this.tasks = response.data;
+    });
+  }
 });
 
-new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
-  el: '#root'
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('aluno', {
+  props: ['aluno_id', 'name', 'aluno_edit'],
+  template: '\n    <option :value="aluno_id" v-if="aluno_id === aluno_edit" selected="selected">{{ name }}</option>\n    <option :value="aluno_id" v-else >{{ name }}</option>\n  '
+
+});
+var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
+  el: '#formulario'
 });
 
 /***/ }),
 
-/***/ 169:
+/***/ 172:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(163);
+module.exports = __webpack_require__(166);
 
 
 /***/ }),

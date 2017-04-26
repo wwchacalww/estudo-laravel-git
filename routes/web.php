@@ -41,6 +41,7 @@ Route::group(['as'=>'turmas.', 'prefix'=>'turmas','middleware'=>['auth','acl']],
 Route::group(['as'=>'ocorrencias.', 'prefix'=>'ocorrencias','middleware'=>['auth','acl']], function(){
   Route::get('',['as'=>'index', 'uses'=>'OcorrenciasController@index', 'can'=>'create.disciplinar']);
   Route::post('indisciplinas/store', ['as'=>'indisciplinas.store', 'uses'=>'IndisciplinasController@store', 'is'=>'administrador']);
+  Route::post('store',['as'=>'store', 'uses'=>'OcorrenciasController@store', 'can'=>'create.disciplinar']);
 });
 
 //Servidores
@@ -70,6 +71,7 @@ Route::group(['as'=>'equipes.','prefix'=>'equipes','middleware'=>['auth','acl']]
 //Horario
 Route::group(['as'=>'horarios.','prefix'=>'horarios','middleware'=>['auth','acl']], function(){
   Route::get('cargas', ['as'=>'cargas.index', 'uses'=>'CargasController@index', 'can'=>'view.turma']);
+  Route::get('cargas/teste', ['as'=>'cargas.teste', 'uses'=>'CargasController@teste', 'can'=>'view.turma']);
   Route::post('cargas/store',['as'=>'cargas.store', 'uses'=>'CargasController@store', 'is'=>'administrador|diretor|administrativo']);
   Route::get('cargas/{carga}/edit', ['as'=>'cargas.edit', 'uses'=>'CargasController@edit', 'is'=>'administrador|diretor|administrativo']);
   Route::put('cargas/{carga}/update', ['as'=>'cargas.update', 'uses'=>'CargasController@update', 'is'=>'administrador|diretor|administrativo']);
@@ -80,4 +82,9 @@ Route::group(['as'=>'horarios.','prefix'=>'horarios','middleware'=>['auth','acl'
   Route::post('disciplinas/store',['as'=>'disciplinas.store', 'uses'=>'DisciplinasController@store', 'is'=>'administrador|diretor|administrativo']);
   Route::get('disciplinas/{disciplina}/edit',['as'=>'disciplinas.edit','uses'=>'DisciplinasController@edit', 'is'=>'administrador|diretor|administrativo']);
   Route::put('disciplinas/{disciplina}/update',['as'=>'disciplinas.update','uses'=>'DisciplinasController@update', 'is'=>'administrador|diretor|administrativo']);
+});
+
+//alunos
+Route::group(['as'=>'alunos.', 'prefix'=>'alunos', 'middleware'=>['auth','acl']], function(){
+  Route::get('apiSelectAluno', ['as'=>'apiSelectAluno','uses'=>'AlunosController@apiSelectAluno', 'can'=>'view.aluno']);
 });
