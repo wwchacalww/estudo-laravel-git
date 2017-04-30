@@ -15,7 +15,7 @@ class CreateOcorrenciasTable extends Migration
     {
         Schema::create('ocorrencias', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('tipo', ['Advertência Oral','Advertência Escrita','Supensão','Termo de Compromisso'])->default('Advertência Oral');
+            $table->enum('tipo', ['Advertência Oral','Advertência Escrita','Suspensão','Termo de Compromisso'])->default('Advertência Oral');
             $table->longText('descricao');
             $table->string('status')->nullable();
             $table->timestamps();

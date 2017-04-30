@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Ocorrencia extends Model
 {
   protected $fillable = [
-      'tipo', 'descricao', 'status', 'equipe_id', 'professor_id'
+      'tipo', 'descricao', 'status', 'equipe_id', 'professor_id', 'created_at',
   ];
 
   public function alunos()

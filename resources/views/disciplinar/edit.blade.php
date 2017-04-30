@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="{{asset('plugins/datatables/dataTables.bootstrap.css')}}">
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="{{asset('plugins/datepicker/datepicker3.css')}}">
   <!-- Select2 -->
   <link rel="stylesheet" href="{{asset('plugins/select2/select2.min.css')}}">
   <!-- Theme style -->
@@ -24,6 +26,7 @@
   <ol class="breadcrumb">
     <li><a href="{{ route('home') }}"><i class="fa fa-dashboard"></i> Direção</a></li>
     <li><a href="{{ route('ocorrencias.index') }}"><i class="fa fa-balance-scale"></i> Disciplinar</a></li>
+    <li>Alterar</li>
   </ol>
 @endsection
 
@@ -31,14 +34,14 @@
 <div class="row">
   <!-- Coluna da Esquerda  Ocorrencias -->
   <div class="col-lg-7 connectedSortable">
-    @if(Auth::check() && Auth::user()->hasPermission('create.disciplinar'))
-    <!-- Nova ocorrencia -->
-    <div class="box box-warning box-solid collapsed-box">
+    @if(Auth::check() && Auth::user()->hasPermission('update.disciplinar'))
+
+    <div class="box box-warning box-solid">
       <div class="box-header with-border">
-        <h3 class="box-title">Nova Ocorrência</h3>
+        <h3 class="box-title">Alterar Ocorrência</h3>
 
         <div class="box-tools pull-right">
-          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
           </button>
         </div>
         <!-- /.box-tools -->
@@ -46,11 +49,27 @@
       <!-- /.box-header -->
       <div class="box-body" >
         @include('layouts.errors')
-        {!! Form::open(['route'=>'ocorrencias.store', 'method'=>'post']) !!}
+        {!! Form::open(['url'=>'ocorrencias/'.$bo->id.'/update', 'method'=>'put']) !!}
+
+        <div class="form-group">
+          <label>Data</label>
+
+          <div class="input-group date">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <input type="text" class="form-control" id="data_bo" name="created_at" value=" {{ Carbon::parse($bo->created_at)->format('d/m/Y') }}">
+          </div>
+          <!-- /.input group -->
+        </div>
+
         <div class="form-group">
           <label for="alunos">Aluno</label>
           {{-- <alunos aluno_edit="0"></alunos> --}}
           <select class="form-control select2" id="aluno_select" multiple="multiple" data-placeholder="Alunos" style="width: 100%;" name="alunos[]" required="required">
+            @foreach($bo->alunos as $aluno)
+              <option value="{{$aluno->id}}" selected="selected">{{ $aluno->nome}} - {{$aluno->turma->turma}}</option>
+            @endforeach
           </select>
 
         </div>
@@ -60,12 +79,22 @@
           <select class="form-control select2" id="professor_select" style="width: 100%;" name="professor_id" >
             <option></option>
             @foreach($cargas as $carga )
-              <option value="{{$carga->professor_id}}">
-                {{$carga->professor->professor}} -
-                @foreach($carga->professor->disciplinas as $disciplina)
-                  {{ $disciplina->disciplina }}
-                @endforeach
-              </option>
+              @if($carga->professor_id == $bo->professor_id)
+                <option value="{{$bo->professor_id}}" selected="selected">
+                  {{$carga->professor->professor}} -
+                  @foreach($carga->professor->disciplinas as $disciplina)
+                    {{ $disciplina->disciplina }}
+                  @endforeach
+                </option>
+              @else
+                <option value="{{$carga->professor_id}}">
+                  {{$carga->professor->professor}} -
+                  @foreach($carga->professor->disciplinas as $disciplina)
+                    {{ $disciplina->disciplina }}
+                  @endforeach
+                </option>
+              @endif
+
             @endforeach
           </select>
         </div>
@@ -75,7 +104,12 @@
           <select class="form-control select2" id="equipe_select" style="width: 100%;" name="equipe_id" required="required" >
             <option></option>
             @foreach($equipes as $equipe )
-              <option value="{{$equipe->id}}">{{$equipe->funcao}} - {{$equipe->user->name}}</option>
+              @if($equipe->id == $bo->equipe_id)
+                  <option value="{{$equipe->id}}" selected="selected">{{$equipe->funcao}} - {{$equipe->user->name}}</option>
+              @else
+                  <option value="{{$equipe->id}}">{{$equipe->funcao}} - {{$equipe->user->name}}</option>
+              @endif
+
             @endforeach
           </select>
         </div>
@@ -83,16 +117,19 @@
         <div class="form-group">
           <label for="professor">Medida Disciplinar</label>
           <select class="form-control" name="tipo" required="required" >
-              <option>Advertência Oral</option>
-              <option>Advertência Escrita</option>
-              <option>Suspensão</option>
-              <option>Termo de Compromisso</option>
+              <option {{ $bo->tipo == 'Advertência Oral' ? 'selected' : ''}}>Advertência Oral</option>
+              <option {{ $bo->tipo == 'Advertência Escrita' ? 'selected"' : ''}}>Advertência Escrita</option>
+              <option {{ $bo->tipo == 'Suspensão' ? 'selected' : ''}}>Suspensão</option>
+              <option {{ $bo->tipo == 'Termo de Compromisso' ? 'selected' : ''}}>Termo de Compromisso</option>
           </select>
         </div>
 
         <div class="form-group">
           <label for="professor">Infrações</label>
           <select class="form-control select2" id="indisciplina_select" multiple="multiple" data-placeholder="Infrações" style="width: 100%;" name="indisciplinas[]" >
+            @foreach($bo->indisciplinas as $infra)
+              <option value="{{$infra->id}}" selected="selected">{{$infra->indisciplina}}</option>
+            @endforeach
             @foreach($indisciplinas as $indisciplina)
               @if($base === 0)
                 <?php
@@ -115,7 +152,7 @@
 
         <div class="form-group">
           <label for="descricao">Descrição dos Fatos</label>
-          <textarea name="descricao" rows="3"class="form-control" required="required"></textarea>
+          <textarea name="descricao" rows="3"class="form-control" required="required">{{$bo->descricao}}</textarea>
         </div>
 
         <div class="box-footer">
@@ -191,24 +228,6 @@
       </div>
     </div>
     <!-- /Ultimas ocorrencias -->
-    <!-- Estatistica Diária -->
-    <div class="box box-success">
-        <div class="box-header with-border">
-          <h3 class="box-title">Gráfico de Ocorrências</h3>
-
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-          </div>
-          <!-- /.box-tools -->
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-          <canvas id="grafico_diario" width="400" height="200"></canvas>
-        </div>
-        <!-- /.box-body -->
-      </div>
-      <!-- /.box -->
-    <!-- /Estatistica Diária -->
   </div>
   <!-- /Coluna da Esquerda -->
   <!-- Coluna da Direitra  Indisciplinas -->
@@ -277,43 +296,6 @@
           </div>
           <!-- /.box -->
 
-          <!-- Info Boxes Matutino -->
-          <div class="info-box bg-green">
-            <span class="info-box-icon"><i class="ion ion-pie-graph"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Matutino</span>
-              <span class="info-box-number">{{$dados['Matutino']['qnt']}} ocorrências</span>
-
-              <div class="progress">
-                <div class="progress-bar" style="width: {{ $dados['Matutino']['porcento'] }}%"></div>
-              </div>
-                  <span class="progress-description">
-                    {{ $dados['Matutino']['porcento'] }}% das ocorrências
-                  </span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-
-          <!-- Info Boxes Vespertino -->
-          <div class="info-box bg-yellow">
-            <span class="info-box-icon"><i class="ion ion-pie-graph"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Vespertino</span>
-              <span class="info-box-number">{{$dados['Vespertino']['qnt']}} ocorrências</span>
-
-              <div class="progress">
-                <div class="progress-bar" style="width: {{ $dados['Vespertino']['porcento'] }}%"></div>
-              </div>
-                  <span class="progress-description">
-                    {{ $dados['Vespertino']['porcento'] }}% das ocorrẽncias
-                  </span>
-            </div>
-            <!-- /.info-box-content -->
-
-          </div>
-
   </div>
   <!-- /Coluna da Direitra -->
 </div>
@@ -329,13 +311,11 @@
   </script>
   <!-- Bootstrap 3.3.6 -->
   <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
-  <!-- Moment Js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/pt-br.js"></script>
-  <!-- Charts Js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
   <!-- Select2 -->
   <script src="{{asset('plugins/select2/select2.full.min.js')}}"></script>
+  <!-- bootstrap datepicker -->
+  <script src="{{asset('plugins/datepicker/bootstrap-datepicker.js')}}"></script>
+  <script src="{{asset('js/locales/datepicker-pt-BR.js')}}"></script>
   <!-- AdminLTE App -->
   <script src="{{ asset('dist/js/app.min.js') }}"></script>
   <!-- AdminLTE for demo purposes -->
@@ -392,76 +372,13 @@
         allowClear: true
       });
 
+      $('#data_bo').datepicker({
+          language: 'pt-BR',
+          autoclose: true
+      });
+
+
     });
-
-  var ctx = $("#grafico_diario");
-  var data = {
-      labels: <?php echo json_encode( $dados['chartOcorrencia']['data']) ?>,
-      datasets: [
-          {
-              label: "Ocorrências",
-              fill: true,
-              lineTension: 0.1,
-              backgroundColor: "rgba(75,192,192,0.4)",
-              borderColor: "rgba(75,192,192,1)",
-              borderCapStyle: 'butt',
-              borderDash: [],
-              borderDashOffset: 0.0,
-              borderJoinStyle: 'miter',
-              pointBorderColor: "rgba(75,192,192,1)",
-              pointBackgroundColor: "#fff",
-              pointBorderWidth: 4,
-              pointHoverRadius: 5,
-              pointHoverBackgroundColor: "rgba(75,192,192,1)",
-              pointHoverBorderColor: "rgba(220,220,220,1)",
-              pointHoverBorderWidth: 2,
-              pointRadius: 1,
-              pointHitRadius: 10,
-              data: {{ json_encode( $dados['chartOcorrencia']['total'])}},
-              spanGaps: false,
-          }
-      ]
-  };
-  var myLineChart = new Chart(ctx, {
-      type: 'line',
-      data: data,
-      options: {
-          scales: {
-              yAxes: [{
-                  ticks:{
-                    beginAtZero: true,
-                    max: 10,
-                  }
-              }],
-              xAxes: [{
-                  display: true,
-                  type: 'time',
-                  time: {
-                      unit: 'day',
-                      displayFormats: {
-                         day: 'DD/MM'
-                      },
-                      tooltipFormat: 'LL'
-                  }
-              }]
-          },
-          title:{
-            display: true,
-            text: 'Gráfico de Ocorrências Diárias'
-          },
-          legend:{
-            labels:{
-
-              usePointStyle: true
-            }
-          },
-          layout:{
-            padding: 10
-          }
-
-      },
-  });
-
 
 
 

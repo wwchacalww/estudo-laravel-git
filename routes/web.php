@@ -42,6 +42,9 @@ Route::group(['as'=>'ocorrencias.', 'prefix'=>'ocorrencias','middleware'=>['auth
   Route::get('',['as'=>'index', 'uses'=>'OcorrenciasController@index', 'can'=>'create.disciplinar']);
   Route::post('indisciplinas/store', ['as'=>'indisciplinas.store', 'uses'=>'IndisciplinasController@store', 'is'=>'administrador']);
   Route::post('store',['as'=>'store', 'uses'=>'OcorrenciasController@store', 'can'=>'create.disciplinar']);
+  Route::get('{ocorrencia}/edit', ['as'=>'edit', 'uses'=>'OcorrenciasController@edit','can'=>'update.disciplinar']);
+  Route::put('{ocorrencia}/update', ['as'=>'update', 'uses'=>'OcorrenciasController@update', 'can'=>'update.disciplinar']);
+  Route::get('{ocorrencia}/print', ['as'=>'print', 'uses'=>'OcorrenciasController@print', 'can'=>'view.disciplinar']);
 });
 
 //Servidores
