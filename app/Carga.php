@@ -19,4 +19,9 @@ class Carga extends Model
   {
       return $this->belongsToMany('App\Turma');
   }
+
+  public function disciplinas()
+  {
+      return $this->hasMany('App\Disciplina');
+  }
 }

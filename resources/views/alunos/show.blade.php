@@ -26,6 +26,7 @@
 @endsection
 @section('content')
 <div class="row">
+  <!-- Coluna Esquerda -->
   <div class="col-md-6">
     <div class="box box-primary">
       <div class="box-header with-border">
@@ -129,6 +130,45 @@
     @endif
 
   </div>
+  <!-- /Coluna Esquerda -->
+  <!-- Coluna Direita -->
+  <div class="col-md-6">
+    <div class="box box-success">
+      <div class="box-header with-border">
+        <h3 class="box-title">Professores</h3>
+      </div>
+
+      <div class="box-body table-responsive no-padding">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>
+                Professor
+              </th>
+              <th>
+                Disciplina
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach($aluno->turma->cargas as $carga)
+              <tr>
+                <td>
+                  {{ $carga->professor->professor }}
+                </td>
+                <td>
+                  @foreach($carga->disciplinas as $disciplina)
+                    <b style="color:{{ $disciplina->cor }}">{{$disciplina->disciplina }}</b>
+                  @endforeach
+                </td>
+              </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- /Coluna Direita -->
 </div>
 @endsection
 @section('jsScripts')

@@ -120,18 +120,24 @@ class CargasController extends Controller
 
     public function teste()
     {
-      $cargas = Carga::all();
-      foreach ($cargas as $carga) {
-        $carga->turmas()->detach();
-        $carga_turmas = array();
-        foreach ($carga->professor->disciplinas as $disciplina) {
-          foreach ($disciplina->Turmas as $turma) {
-            if (!in_array($turma->id, $carga_turmas)) {
-              $carga_turmas[] = $turma->id;
-            }
-          }
-        }
-        $carga->turmas()->attach($carga_turmas);
+      // $cargas = Carga::all();
+      // foreach ($cargas as $carga) {
+      //   $carga->turmas()->detach();
+      //   $carga_turmas = array();
+      //   foreach ($carga->professor->disciplinas as $disciplina) {
+      //     foreach ($disciplina->Turmas as $turma) {
+      //       if (!in_array($turma->id, $carga_turmas)) {
+      //         $carga_turmas[] = $turma->id;
+      //       }
+      //     }
+      //   }
+      //   $carga->turmas()->attach($carga_turmas);
+      // }
+
+      $disciplinas = \App\Disciplina::all();
+      foreach ($disciplinas as $disciplina) {
+        $disciplina->carga_id = $disciplina->professor->cargas[0]->id;
+        $disciplina->update();
       }
 
       return 'oi';
