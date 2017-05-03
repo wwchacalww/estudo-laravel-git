@@ -167,4 +167,8 @@ class EmpregadosController extends Controller
       //return strtoupper($data->formatLocalized('%B'));
       return response()->view('empregados.ponto',['empregado'=>$empregado, 'data'=>$data])->header('Content-Type', 'application/pdf');
     }
+
+    public function avalia(Empregado $empregado){ 
+	return response()->view('empregados.avalia',['empregado'=>$empregado])->header('Content-Type', 'application/pdf');
+    }
 }

@@ -40,7 +40,7 @@ Route::group(['as'=>'turmas.', 'prefix'=>'turmas','middleware'=>['auth','acl']],
 //Indisciplinas
 Route::group(['as'=>'ocorrencias.', 'prefix'=>'ocorrencias','middleware'=>['auth','acl']], function(){
   Route::get('',['as'=>'index', 'uses'=>'OcorrenciasController@index', 'can'=>'create.disciplinar']);
-  Route::post('indisciplinas/store', ['as'=>'indisciplinas.store', 'uses'=>'IndisciplinasController@store', 'is'=>'administrador']);
+  Route::post('indisciplinas/store', ['as'=>'indisciplinas.store', 'uses'=>'IndisciplinasController@store', 'can'=>'create.disciplinar']);
   Route::post('store',['as'=>'store', 'uses'=>'OcorrenciasController@store', 'can'=>'create.disciplinar']);
   Route::get('{ocorrencia}/edit', ['as'=>'edit', 'uses'=>'OcorrenciasController@edit','can'=>'update.disciplinar']);
   Route::put('{ocorrencia}/update', ['as'=>'update', 'uses'=>'OcorrenciasController@update', 'can'=>'update.disciplinar']);
@@ -61,6 +61,7 @@ Route::group(['as'=>'empregados.', 'prefix'=>'empregados','middleware'=>['auth',
   Route::put('{empregado}/update',['as'=>'update', 'uses' => 'EmpregadosController@update', 'is'=>'administrador|diretor|administrativo']);
   Route::get('{empregado}/namo', ['as'=>'namo','uses'=>'EmpregadosController@namo','can'=>'view.servidor']);
   Route::post('{empregado}/ponto',['as'=>'ponto', 'uses'=>'EmpregadosController@ponto','is'=>'administrador|diretor|administrativo']);
+  Route::get('{empregado}/avalia',['as'=>'avalia', 'uses'=>'EmpregadosController@avalia','is'=>'administrador|diretor|administrativo']);
 });
 
 //Equipe
@@ -90,4 +91,10 @@ Route::group(['as'=>'horarios.','prefix'=>'horarios','middleware'=>['auth','acl'
 //alunos
 Route::group(['as'=>'alunos.', 'prefix'=>'alunos', 'middleware'=>['auth','acl']], function(){
   Route::get('apiSelectAluno', ['as'=>'apiSelectAluno','uses'=>'AlunosController@apiSelectAluno', 'can'=>'view.aluno']);
+  Route::get('', ['as'=>'index', 'uses'=>'AlunosController@index', 'can'=>'view.aluno']);
+  Route::get('create', ['as'=>'create', 'uses'=>'AlunosController@create', 'can'=>'create.aluno']);
+  Route::get('store', ['as'=>'store', 'uses'=>'AlunosController@store', 'can'=>'create.aluno']);
+  Route::get('{aluno}/edit', ['as'=>'edit', 'uses'=>'AlunosController@edit', 'can'=>'update.aluno']);
+  Route::put('{aluno}/update', ['as'=>'edit', 'uses'=>'AlunosController@update', 'can'=>'update.aluno']);
+  Route::get('{aluno}/show', ['as'=>'show', 'uses'=>'AlunosController@show', 'can'=>'view.aluno']);
 });

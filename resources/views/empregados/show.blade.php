@@ -92,7 +92,7 @@
                    <ul class="dropdown-menu">
                      <li class="active"><a href="{{url('empregados/'.$empregado->id.'/namo')}}" target="_blank"><i class="fa fa-medkit"></i>Guia do Namo</a></li>
                      <li><a href="#"><i class="fa fa-plane"></i>Férias</a></li>
-                     <li><a href="#"><i class="fa fa-bar-chart"></i>Avaliação de Temporário</a></li>
+                     <li><a href="{{url('empregados/'.$empregado->id.'/avalia')}}" target="_blank"><i class="fa fa-bar-chart"></i>Avaliação de Temporário</a></li>
                      
                    </ul>
                  </li>
