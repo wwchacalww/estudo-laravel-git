@@ -68,7 +68,7 @@
                       <tbody>
                         @foreach($turma->alunos as $aluno)
                           <tr>
-                            <td>{{$aluno->nome}}</td>
+                            <td><a href="{{ url('alunos/'.$aluno->id.'/show')}}">{{$aluno->nome}}</a> </td>
                             <?php
                             $fone = explode("#", $aluno->telefone);
                             ?>
@@ -153,7 +153,7 @@
                       <tbody>
                         @foreach($turma->alunos as $aluno)
                           <tr>
-                            <td>{{$aluno->nome}}</td>
+                            <td><a href="{{ url('alunos/'.$aluno->id.'/show')}}">{{$aluno->nome}}</a></td>
                             <?php
                             $fone = explode("#", $aluno->telefone);
                             ?>
