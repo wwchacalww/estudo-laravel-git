@@ -31,6 +31,9 @@
     <div class="box box-primary">
       <div class="box-header with-border">
         <h3 class="box-title">{{$aluno->nome}} - [ {{ $aluno->matricula }} ]</h3>
+        @if(Auth::check() && Auth::user()->hasPermission('update.aluno'))
+          <a href="{{url('alunos/'.$aluno->id.'/edit')}}" class="pull-right btn btn-info btn-xs"> <i class="fa fa-edit"></i> | Editar</a>
+        @endif
       </div>
       <!-- /.box-header -->
         <div class="box-body">

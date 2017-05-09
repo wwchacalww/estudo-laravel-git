@@ -93,7 +93,7 @@ Route::group(['as'=>'alunos.', 'prefix'=>'alunos', 'middleware'=>['auth','acl']]
   Route::get('apiSelectAluno', ['as'=>'apiSelectAluno','uses'=>'AlunosController@apiSelectAluno', 'can'=>'view.aluno']);
   Route::get('', ['as'=>'index', 'uses'=>'AlunosController@index', 'can'=>'view.aluno']);
   Route::get('create', ['as'=>'create', 'uses'=>'AlunosController@create', 'can'=>'create.aluno']);
-  Route::get('store', ['as'=>'store', 'uses'=>'AlunosController@store', 'can'=>'create.aluno']);
+  Route::post('store', ['as'=>'store', 'uses'=>'AlunosController@store', 'can'=>'create.aluno']);
   Route::get('{aluno}/edit', ['as'=>'edit', 'uses'=>'AlunosController@edit', 'can'=>'update.aluno']);
   Route::put('{aluno}/update', ['as'=>'edit', 'uses'=>'AlunosController@update', 'can'=>'update.aluno']);
   Route::get('{aluno}/show', ['as'=>'show', 'uses'=>'AlunosController@show', 'can'=>'view.aluno']);
