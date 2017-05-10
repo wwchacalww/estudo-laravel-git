@@ -20,7 +20,7 @@ class OcorrenciasController extends Controller
     {
 
         $indisciplinas = Indisciplina::whereNotNull('base')->orderBy('base')->get();
-        $ocorrencias = Ocorrencia::where('created_at','<','2018-01-01 00:00:01')->orderBy('created_at')->get();
+        $ocorrencias = Ocorrencia::where('created_at','<','2018-01-01 00:00:01')->orderBy('created_at','desc')->get();
         //Dados
         $dados['total'] = 0;
         $dados['Matutino']['qnt'] = 0;
