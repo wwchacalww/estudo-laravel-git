@@ -26,6 +26,7 @@
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu">
       <li class="header">MENU</li>
+
       <!-- Menu Usuários -->
       <li class="treeview">
         <a href="#">
@@ -41,6 +42,7 @@
           <li><a href="{{ route('users.index')}}"><i class="fa fa-user"></i> Lista</a></li>
         </ul>
       </li>
+
       <!-- Menu Turmas -->
       @if(Auth::check() && Auth::user()->hasPermission('view.turma'))
         <li class="treeview">
@@ -49,6 +51,7 @@
           </a>
         </li>
       @endif
+
       <!-- Menu Disciplinar -->
       @if(Auth::check() && Auth::user()->hasPermission('create.disciplinar'))
         <li class="treeview">
@@ -57,8 +60,9 @@
           </a>
         </li>
       @endif
+
       <!-- Menu Servidor -->
-      @if(Auth::check() && Auth::user()->hasPermission('view.servidor'))
+      @if(Auth::check() && Auth::user()->isRole('administrador|diretor|administrativo'))
         <li class="treeview">
           <a href="#">
             <i class="fa fa-street-view"></i> <span>Servidor</span>
@@ -75,6 +79,7 @@
           </ul>
         </li>
       @endif
+
       <!-- Menu Equipe -->
       @if(Auth::check() && Auth::user()->isRole('administrador|diretor|administrativo'))
         <li class="treeview">

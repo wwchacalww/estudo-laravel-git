@@ -252,7 +252,7 @@
                 </ul>
               </ul>
 
-              @if(Auth::check() && Auth::user()->isRole('diretor|administrador'))
+              @if(Auth::check() && Auth::user()->hasPermission('create.disciplinar'))
                 <hr>
                 <h4>Nova Infração</h4>
                 {!! Form::open(['route'=>'ocorrencias.indisciplinas.store','method' => 'post']) !!}

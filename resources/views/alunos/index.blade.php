@@ -49,7 +49,7 @@
 
 @if($busca !== 0)
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-12">
        <div class="box box-{{ count($busca) > 0 ? 'success' : 'warning' }}">
          <div class="box-header with-border">
            <h3 class="box-title">Resultado da Pesquisa</h3>
