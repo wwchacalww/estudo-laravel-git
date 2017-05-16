@@ -30,7 +30,7 @@
 @section('content')
 <div class="row">
   <!-- Coluna da Esquerda  Ocorrencias -->
-  <div class="col-lg-7 connectedSortable">
+  <div class="col-lg-7 connectedSortable" id="vueModal">
     @if(Auth::check() && Auth::user()->hasPermission('create.disciplinar'))
     <!-- Nova ocorrencia -->
     <div class="box box-warning box-solid">
@@ -140,17 +140,57 @@
         <!-- /.box-tools -->
       </div>
       <div class="box-body">
-        <table class="table table-bordered table-striped" id="ocorrencias_table">
+        <table class="table table-bordered  table-striped" id="ocorrencias_table">
           <thead>
-            <tr>
+            {{-- <tr>
               <th>Data</th>
               <th>Ocorrência</th>
               <th>Alunos</th>
+            </tr> --}}
+            <tr>
+              <th>Data</th>
+              <th>created_at</th>
+              <th width="40%">Alunos</th>
+              <th>Ocorrência</th>
+              <th>Opções</th>
             </tr>
           </thead>
           <tbody>
             @foreach($ocorrencias as $ocorrencia)
               <tr>
+                <td>{{ $ocorrencia->created_at }}</td>
+                <td>{{ $ocorrencia->created_at }}</td>
+                <td>
+                  @if(count($ocorrencia->alunos) == 1)
+                    {{ $ocorrencia->alunos[0]->nome}} - {{$ocorrencia->alunos[0]->turma->turma}}
+                  @elseif(count($ocorrencia->alunos) > 1)
+                    <dl>
+                      <dt><i class="fa fa-arrow-down"></i>&nbsp; Vários Alunos</dt>
+                    @foreach($ocorrencia->alunos as $aluno)
+                      <dd>{{$aluno->nome}} - {{$aluno->turma->turma}}</dd>
+                    @endforeach
+                    </dl>
+                  @endif
+                </td>
+                <td style="vertical-align: middle" class="{{ $ocorrencia->tipo == 'Suspensão' ? 'text-danger' : 'text-warning' }}">{{ $ocorrencia->tipo }}</td>
+                <td>
+                  <modal
+                    v-if="showModal"
+                    @close="showModal = false"
+                    titulo="{{$ocorrencia->tipo}}"
+                    identifica="meOcorre{{$ocorrencia->id}}"
+                    descricao="{{$ocorrencia->descricao}}"
+                  ></modal>
+                  <a href="{{url('ocorrencias/'.$ocorrencia->id.'/print')}}" target="_blank" class="btn btn-xs btn-primary">  <i class="fa fa-print"></i> | Imprimir</a>
+                  @if(Auth::user()->hasPermission('update.disciplinar'))
+                      &nbsp;<a href="{{url('ocorrencias/'.$ocorrencia->id.'/edit')}}" class="btn btn-xs btn-danger"> <i class="fa fa-edit"> | Editar</i></a>
+                  @endif
+                  <button @click="showModal = true" type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#meOcorre{{$ocorrencia->id}}">
+                  <i class="fa fa-eye"></i> | Exibir
+                  </button>
+                </td>
+              </tr>
+              {{-- <tr>
                 <td class="text-center" style="vertical-align: middle">
                   {{ Carbon::parse($ocorrencia->created_at)->format('d/m/Y') }}
                 </td>
@@ -167,9 +207,7 @@
                 <td colspan="3">
                   <div class="box-tools pull-right">
                     <a href="{{url('ocorrencias/'.$ocorrencia->id.'/print')}}" target="_blank">  <i class="fa fa-print"></i></a>
-                    @if(Auth::user()->hasPermission('update.disciplinar'))
-                        <a href="{{url('ocorrencias/'.$ocorrencia->id.'/edit')}}"> <i class="fa fa-edit"></i></a>
-                    @endif
+
 
 
                   </div>
@@ -181,10 +219,8 @@
                     <dt>Descrição</dt>
                     <dd>{{ $ocorrencia->descricao}}</dd>
                   </dl>
-
-
                 </td>
-              </tr>
+              </tr> --}}
             @endforeach
           </tbody>
         </table>
@@ -192,7 +228,7 @@
     </div>
     <!-- /Ultimas ocorrencias -->
     <!-- Estatistica Diária -->
-    <div class="box box-success">
+    {{-- <div class="box box-success">
         <div class="box-header with-border">
           <h3 class="box-title">Gráfico de Ocorrências</h3>
 
@@ -206,7 +242,7 @@
           <canvas id="grafico_diario" width="400" height="200"></canvas>
         </div>
         <!-- /.box-body -->
-      </div>
+      </div> --}}
       <!-- /.box -->
     <!-- /Estatistica Diária -->
   </div>
@@ -332,6 +368,9 @@
   <!-- Moment Js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/pt-br.js"></script>
+  <!-- DataTables -->
+  <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
+  <script src="{{ asset('plugins/datatables/dataTables.bootstrap.min.js')}}"></script>
   <!-- Charts Js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
   <!-- Select2 -->
@@ -340,6 +379,8 @@
   <script src="{{ asset('dist/js/app.min.js') }}"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="{{ asset('dist/js/demo.js') }}"></script>
+  <!-- Vuejs -->
+  <script src="https://unpkg.com/vue@2.1.3/dist/vue.js"></script>
   <!-- Page script -->
   <script>
 
@@ -391,6 +432,39 @@
         placeholder: "Selecione um Membro da Direção",
         allowClear: true
       });
+
+       $("#ocorrencias_table").DataTable({
+         "language": {
+             "url": "{{asset('plugins/datatables/lang/portugues.brazil.lang')}}"
+         },
+        "columnDefs": [
+              {
+                  // The `data` parameter refers to the data for the cell (defined by the
+                  // `data` option, which defaults to the column being worked with, in
+                  // this case `data: 0`.
+                  "render": function ( data, type, row ) {
+                      return moment(data).format('DD/MM/YYYY') ;
+                  },
+                  "targets": 0,
+              },
+              {
+                "targets": 1, "visible":false
+              }
+        ],
+        "order": [[1, 'desc']]
+       });
+
+      // Collapse DT
+      $('dt').click(function(e){
+          $(this).nextUntil('dt').toggle();
+      });
+
+      $('dd').hide();
+
+      // //Modal
+      // $(".myModal").modal();
+
+
 
     });
 
@@ -462,8 +536,36 @@
       },
   });
 
+  Vue.component('modal', {
+    props:['titulo','identifica', 'descricao'],
+    template: `
+    <div class="modal fade" :id="identifica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">@{{titulo}}</h4>
+          </div>
+          <div class="modal-body">
+            <p>@{{descricao}}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" @click="$emit('close')">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    `
+  });
 
+  new Vue({
+    el:'#vueModal',
 
+    data: {
+      showModal: false
+    }
+
+  });
 
   </script>
 @endsection

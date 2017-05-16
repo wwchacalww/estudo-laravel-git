@@ -18,9 +18,9 @@
 Route::Auth();
 
 Route::get('/',[ 'as'=>'home', 'uses' => 'HomeController@index', 'middleware' => ['auth', 'acl']]);
-Route::get('/turmas/show', 'TurmasController@show');
-Route::get('chart', 'TurmasController@chart');
-Route::get('components', 'TurmasController@components');
+// Route::get('/turmas/show', 'TurmasController@show');
+// Route::get('chart', 'TurmasController@chart');
+// Route::get('components', 'TurmasController@components');
 
 //Usuarios
 Route::group(['as'=>'users.', 'prefix'=>'users', 'middleware'=>['auth','acl']], function(){
@@ -97,4 +97,7 @@ Route::group(['as'=>'alunos.', 'prefix'=>'alunos', 'middleware'=>['auth','acl']]
   Route::get('{aluno}/edit', ['as'=>'edit', 'uses'=>'AlunosController@edit', 'can'=>'update.aluno']);
   Route::put('{aluno}/update', ['as'=>'edit', 'uses'=>'AlunosController@update', 'can'=>'update.aluno']);
   Route::get('{aluno}/show', ['as'=>'show', 'uses'=>'AlunosController@show', 'can'=>'view.aluno']);
+  Route::get('fileTeste', ['as'=>'fileTeste', 'uses'=>'AlunosController@fileTeste','is'=>'administrador']);
+  Route::post('fileTesteStore', ['as'=>'fileTesteStore', 'uses'=>'AlunosController@fileTesteStore', 'is'=>'administrador']);
+  Route::post('fileTesteNovo', ['as'=>'fileTesteNovo', 'uses'=>'AlunosController@fileTesteNovo', 'is'=>'administrador']);
 });
