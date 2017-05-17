@@ -95,7 +95,7 @@
           <div class="icon">
             <i class="ion ion-sad-outline"></i>
           </div>
-          <a href="#" class="small-box-footer">Mais Informações &nbsp; <i class="fa fa-arrow-circle-right"></i></a>
+          <a href="{{route('turmas.atrasadosPdf')}}" target="_blank" class="small-box-footer">Imprimir Relatório &nbsp; <i class="fa fa-print"></i></a>
         </div>
       </div>
       <!-- ./col -->

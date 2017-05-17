@@ -81,4 +81,35 @@ class TurmasController extends Controller
     public function components(){
       return view('testes.components');
     }
+
+    public function atrasadosPdf()
+    {
+      $turmas = Turma::where('ano',date('Y'))->get();
+      $atrasados['6º Ano'] = 0;
+      $atrasados['7º Ano'] = 0;
+      $atrasados['8º Ano'] = 0;
+      $atrasados['9º Ano'] = 0;
+      $atrasados['Total'] = 0;
+      foreach ($turmas as $turma) {
+        if ($turma->serie == '6º Ano') {
+          $idade = 12;
+        }elseif($turma->serie == '7º Ano'){
+          $idade = 13;
+        }elseif($turma->serie == '8º Ano'){
+          $idade = 14;
+        }elseif($turma->serie == '9º Ano'){
+          $idade = 15;
+        }
+        $atrasados[$turma->id]= 0;
+
+        foreach ($turma->alunos as $aluno) {
+          if (Carbon::Parse($aluno->dn)->age > $idade) {
+            $atrasados[$turma->id]++;
+            $atrasados[$turma->serie]++;
+            $atrasados['Total']++;
+          }
+        }
+      }
+      return response()->view('turmas.atrasados',['turmas'=>$turmas, 'atrasados'=>$atrasados])->header('Content-Type', 'application/pdf');
+    }
 }
