@@ -111,6 +111,7 @@ class AlunosController extends Controller
     {
       // $path = Storage::putFile('avatars', $request->file('alunos'));
       $contents = file($request->file('alunos'));
+      $matriculado = array();
       foreach ($contents as $linha) {
         if (strlen($linha) < 5 && strlen($linha) > 2) {
           $turma_id = substr($linha, 0, 2);
@@ -121,6 +122,7 @@ class AlunosController extends Controller
         if (strlen($linha) > 10) {
           $x = explode(" ", $linha);
           $matricula = $x[0];
+          $matriculado[]=$x[0];
           //echo $matricula."<br>";
           $aluno = Aluno::where('matricula',$matricula)->first();
           // echo count($aluno)."<br>";
@@ -132,6 +134,17 @@ class AlunosController extends Controller
           }
         }
       }
+
+      //Verificando alunos Transferidos
+      echo '<h1>Aluno transferidos</h1>';
+      $alunos = Aluno::whereHas('turma', function($query) { $query->where('ano', date('Y')); })->orderBy('turma_id', 'nome')->get();
+      foreach ($alunos as $aluno ) {
+        if(!in_array($aluno->matricula, $matriculado)){
+          $aluno->update(['turma_id'=> 37]);
+          echo $aluno->matricula."<br />";
+        }
+      }
+
       //return $contents;
     }
 

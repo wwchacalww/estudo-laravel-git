@@ -15,7 +15,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-      $turmas = Turma::all();
+      $turmas = Turma::where('ano', date('Y'))->get();
       $students['Total'] = 0;
       $students['Matutino']['total']= 0;
       $students['Vespertino']['total']=0;

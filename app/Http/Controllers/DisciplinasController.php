@@ -14,9 +14,9 @@ class DisciplinasController extends Controller
      */
     public function index()
     {
-        $turmas = \App\Turma::where('ano',2017)->pluck('id','turma');
+        $turmas = \App\Turma::where('ano',date('Y'))->pluck('id','turma');
 
-        $disciplinas = Disciplina::all();
+        $disciplinas = Disciplina::where('ano',date('Y'))->get();
         return view('disciplinas.index',['disciplinas'=>$disciplinas,'turmas'=>$turmas]);
     }
 
@@ -76,13 +76,13 @@ class DisciplinasController extends Controller
      */
     public function edit(Disciplina $disciplina)
     {
-      $turmas = \App\Turma::where('ano',2017)->pluck('id','turma');
+      $turmas = \App\Turma::where('ano',date('Y'))->pluck('id','turma');
       $enturmado = array();
       foreach ($disciplina->turmas as $value) {
         $enturmado[]= $value->id;
       }
 
-      $disciplinas = Disciplina::all();
+      $disciplinas = Disciplina::where('ano', date('Y'))->get();
       return view('disciplinas.edit',['disciplinas'=>$disciplinas,'turmas'=>$turmas, 'materia'=>$disciplina, 'enturmado' => $enturmado]);
     }
 

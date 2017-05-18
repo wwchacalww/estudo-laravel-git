@@ -9,7 +9,7 @@ class TurmasController extends Controller
 {
     public function index()
     {
-      $turmas = Turma::all();
+      $turmas = Turma::where('ano', date('Y'))->get();
       foreach ($turmas as $turma ) {
         $atrasados[$turma->id] = 0;
         foreach ($turma->alunos as $aluno) {
@@ -33,7 +33,7 @@ class TurmasController extends Controller
       return view('turmas.show');
     }
     public function chart(){
-      $turmas = Turma::all();
+      $turmas = Turma::where('ano', date('Y'))->get();
       $students['Total'] = 0;
       $students['Matutino']['total']= 0;
       $students['Vespertino']['total']=0;

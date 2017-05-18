@@ -120,7 +120,7 @@ class OcorrenciasController extends Controller
     public function edit(Ocorrencia $ocorrencia)
     {
       $indisciplinas = Indisciplina::whereNotNull('base')->orderBy('base')->get();
-      $ocorrencias = Ocorrencia::all();
+      $ocorrencias = Ocorrencia::where('created_at','<','2018-01-01 00:00:01')->orderBy('created_at','desc')->get();
       $cargas = Carga::all();
       $equipes = Equipe::whereNotNull('empregado_id')->get();
       return view('disciplinar.edit',['ocorrencias'=>$ocorrencias, 'indisciplinas'=>$indisciplinas, 'base' => 0,  'cargas' => $cargas, 'equipes'=>$equipes, 'bo'=>$ocorrencia]);
