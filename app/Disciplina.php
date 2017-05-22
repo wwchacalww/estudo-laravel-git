@@ -23,4 +23,9 @@ class Disciplina extends Model
   {
     return $this->belongsTo('App\Carga');
   }
+
+  public function horarios()
+  {
+    return $this->hasMany('App\Horario');
+  }
 }

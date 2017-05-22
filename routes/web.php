@@ -35,7 +35,7 @@ Route::group(['as'=>'users.', 'prefix'=>'users', 'middleware'=>['auth','acl']], 
 //Turmas
 Route::group(['as'=>'turmas.', 'prefix'=>'turmas','middleware'=>['auth','acl']], function(){
   Route::get('',['as'=>'index', 'uses'=>'TurmasController@index', 'can'=>'view.turma']);
-  Route::get('atrasadosPdf',['as'=>'atrasadosPdf', 'uses'=>'TurmasController@atrasadosPdf','can'=>'view.turma']); 
+  Route::get('atrasadosPdf',['as'=>'atrasadosPdf', 'uses'=>'TurmasController@atrasadosPdf','can'=>'view.turma']);
 });
 
 //Indisciplinas
@@ -87,6 +87,12 @@ Route::group(['as'=>'horarios.','prefix'=>'horarios','middleware'=>['auth','acl'
   Route::post('disciplinas/store',['as'=>'disciplinas.store', 'uses'=>'DisciplinasController@store', 'is'=>'administrador|diretor|administrativo']);
   Route::get('disciplinas/{disciplina}/edit',['as'=>'disciplinas.edit','uses'=>'DisciplinasController@edit', 'is'=>'administrador|diretor|administrativo']);
   Route::put('disciplinas/{disciplina}/update',['as'=>'disciplinas.update','uses'=>'DisciplinasController@update', 'is'=>'administrador|diretor|administrativo']);
+  // Route::get('create', ['as'=>'create', 'uses'=>'HorariosController@create', 'can'=>'create.turma']);
+  Route::post('store',['as'=>'store', 'uses'=>'HorariosController@store','can'=>'create.turma']);
+  Route::get('',['as'=>'index','uses'=>'HorariosController@index', 'can'=>'view.turma']);
+  Route::get('turma_disciplinas', ['as'=>'turma_disciplinas', 'uses'=>'HorariosController@apiTurmaDisciplina', 'can'=>'view.turma']);
+  Route::get('api_horario', ['as'=>'api_horario', 'uses'=>'HorariosController@apiHorario', 'can'=>'view.turma']);
+  // Route::get('teste', ['as'=>'teste', 'uses'=>'HorariosController@teste', 'can'=>'view.turma']);
 });
 
 //alunos
