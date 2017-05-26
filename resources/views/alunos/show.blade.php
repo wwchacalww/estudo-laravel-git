@@ -109,9 +109,15 @@
                 {{ $ocorrencia->tipo}}
               </p>
               <small>
-                {{ Carbon::parse($ocorrencia->created_at)->formatLocalized('%A, %d de %B de %Y')}}, {{ $ocorrencia->equipe->funcao}} {{ $ocorrencia->equipe->user->name}} e
-                {{ $ocorrencia->professor->sexo }} {{ $ocorrencia->professor->professor }} registraram a seguinte ocorrência: </br>
-                <b> {{ $ocorrencia->descricao }}</b> <br>
+                @if($ocorrencia->professor_id != NULL)
+                  {{ Carbon::parse($ocorrencia->created_at)->formatLocalized('%A, %d de %B de %Y')}}, {{ $ocorrencia->equipe->funcao}} {{ $ocorrencia->equipe->user->name}} e
+                  {{ $ocorrencia->professor->sexo }} {{ $ocorrencia->professor->professor }} registraram a seguinte ocorrência: </br>
+                  <b> {{ $ocorrencia->descricao }}</b>
+                @else
+                  {{ Carbon::parse($ocorrencia->created_at)->formatLocalized('%A, %d de %B de %Y')}}, {{ $ocorrencia->equipe->funcao}} {{ $ocorrencia->equipe->user->name}}  registrou a seguinte ocorrência: </br>
+                  <b> {{ $ocorrencia->descricao }}</b>
+                @endif
+                 <br>
                 Tipo de infração: <br>
                 @foreach($ocorrencia->indisciplinas as $indisciplina)
                   <b> - {{ $indisciplina->base}} - {{ $indisciplina->indisciplina }} </b><br>

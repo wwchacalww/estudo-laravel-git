@@ -79,6 +79,18 @@ foreach ($ocorrencia->alunos as $aluno) {
   	PDF::Cell(161, 5, $ocorrencia->equipe->funcao." - ".$ocorrencia->equipe->user->name, 1, 1, 'L', 0);
   }
 
+	//3º Linha
+  PDF::SetFont('times','B',10);
+
+  PDF::Cell(30, 5, 'Responsável', 1, 0, 'L', 0);
+  PDF::SetFont('times','',10);
+  PDF::Cell(96, 5, $aluno->mae, 1, 0, 'L', 0);
+  PDF::SetFont('times','B',10);
+  PDF::Cell(15, 5, 'Telefone', 1, 0, 'L', 0);
+  PDF::SetFont('times','',10);
+  PDF::Cell(55, 5, str_replace("#", ", ",$aluno->telefone), 1, 1, 'L', 0);
+  PDF::SetFont('times','B',10);
+
   PDF::ln();
   PDF::SetFont('helvetica','B',12);
   PDF::Cell(198, 7, $ocorrencia->tipo, 0, 1, 'C', 0);
@@ -158,6 +170,18 @@ foreach ($ocorrencia->alunos as $aluno) {
   	PDF::SetFont('times','',10);
   	PDF::Cell(161, 5, $ocorrencia->equipe->funcao." - ".$ocorrencia->equipe->user->name, 1, 1, 'L', 0);
   }
+
+	//3º Linha
+  PDF::SetFont('times','B',10);
+
+  PDF::Cell(30, 5, 'Responsável', 1, 0, 'L', 0);
+  PDF::SetFont('times','',10);
+  PDF::Cell(96, 5, $aluno->mae, 1, 0, 'L', 0);
+  PDF::SetFont('times','B',10);
+  PDF::Cell(15, 5, 'Telefone', 1, 0, 'L', 0);
+  PDF::SetFont('times','',10);
+  PDF::Cell(55, 5, str_replace("#", ", ",$aluno->telefone), 1, 1, 'L', 0);
+  PDF::SetFont('times','B',10);
 
 	PDF::ln();
   PDF::SetFont('helvetica','B',12);

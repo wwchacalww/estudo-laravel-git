@@ -79,7 +79,7 @@ class OcorrenciasController extends Controller
     {
       $this->validate( request(),[
           'alunos' => 'required',
-          'professor_id' =>'required|integer',
+          
           'equipe_id' => 'required|integer',
           'tipo' => 'required',
           'indisciplinas' => 'required',

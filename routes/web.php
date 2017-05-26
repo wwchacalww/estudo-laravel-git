@@ -92,6 +92,7 @@ Route::group(['as'=>'horarios.','prefix'=>'horarios','middleware'=>['auth','acl'
   Route::get('',['as'=>'index','uses'=>'HorariosController@index', 'can'=>'view.turma']);
   Route::get('turma_disciplinas', ['as'=>'turma_disciplinas', 'uses'=>'HorariosController@apiTurmaDisciplina', 'can'=>'view.turma']);
   Route::get('api_horario', ['as'=>'api_horario', 'uses'=>'HorariosController@apiHorario', 'can'=>'view.turma']);
+  Route::get('api_professor_horario', ['as'=>'api_professor_horario', 'uses'=>'HorariosController@apiProfessorHorario', 'can'=>'view.turma']);
   // Route::get('teste', ['as'=>'teste', 'uses'=>'HorariosController@teste', 'can'=>'view.turma']);
 });
 

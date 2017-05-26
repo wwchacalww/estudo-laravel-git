@@ -162,12 +162,24 @@
                 <td>{{ $ocorrencia->created_at }}</td>
                 <td>
                   @if(count($ocorrencia->alunos) == 1)
-                    {{ $ocorrencia->alunos[0]->nome}} - {{$ocorrencia->alunos[0]->turma->turma}}
+                    <?php
+
+                      $telefones = str_replace('#', ', ', $ocorrencia->alunos[0]->telefone);
+                      $estudante[$ocorrencia->id][] = ['nome'=>$ocorrencia->alunos[0]->nome, 'fone' => $telefones ];
+
+                     ?>
+                    <a href="{{url('alunos/'.$ocorrencia->alunos[0]->id.'/show')}}">{{ $ocorrencia->alunos[0]->nome}} - {{$ocorrencia->alunos[0]->turma->turma}}</a>
                   @elseif(count($ocorrencia->alunos) > 1)
                     <dl>
                       <dt><i class="fa fa-arrow-down"></i>&nbsp; Vários Alunos</dt>
                     @foreach($ocorrencia->alunos as $aluno)
-                      <dd>{{$aluno->nome}} - {{$aluno->turma->turma}}</dd>
+                      <?php
+
+                        $telefones = str_replace('#', ', ', $aluno->telefone);
+                        $estudante[$ocorrencia->id][] = ['nome'=>$aluno->nome, 'fone' => $telefones ];
+
+                       ?>
+                      <dd><a href="{{url('alunos/'.$aluno->id.'/show')}}">{{$aluno->nome}} - {{$aluno->turma->turma}}</a></dd>
                     @endforeach
                     </dl>
                   @endif
@@ -180,6 +192,8 @@
                     titulo="{{$ocorrencia->tipo}}"
                     identifica="meOcorre{{$ocorrencia->id}}"
                     descricao="{{$ocorrencia->descricao}}"
+
+                    :estudantes=' <?php echo json_encode($estudante[$ocorrencia->id]); ?>'
                   ></modal>
                   <a href="{{url('ocorrencias/'.$ocorrencia->id.'/print')}}" target="_blank" class="btn btn-xs btn-primary">  <i class="fa fa-print"></i> | Imprimir</a>
                   @if(Auth::user()->hasPermission('update.disciplinar'))
@@ -537,7 +551,15 @@
   });
 
   Vue.component('modal', {
-    props:['titulo','identifica', 'descricao'],
+    // props:['titulo','identifica', 'descricao', 'estudantes'],
+    props:{
+      titulo: [String, Number],
+      identifica: [String, Number],
+      descricao: [String, Number],
+      estudantes: {
+        type: Array
+      }
+    },
     template: `
     <div class="modal fade" :id="identifica" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
@@ -547,6 +569,20 @@
             <h4 class="modal-title" id="myModalLabel">@{{titulo}}</h4>
           </div>
           <div class="modal-body">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Aluno</th>
+                  <th>Telefone</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="estudante in estudantes">
+                  <td>@{{estudante.nome}}</td>
+                  <td>@{{ estudante.fone }}</td>
+                </tr>
+              </tbody>
+            </table>
             <p>@{{descricao}}</p>
           </div>
           <div class="modal-footer">
@@ -555,7 +591,8 @@
         </div>
       </div>
     </div>
-    `
+    `,
+
   });
 
   new Vue({

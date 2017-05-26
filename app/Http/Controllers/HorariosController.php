@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Horario;
 use Illuminate\Http\Request;
 use Carbon;
+use App\Turma;
+use App\Carga;
 class HorariosController extends Controller
 {
     /**
@@ -14,7 +16,17 @@ class HorariosController extends Controller
      */
     public function index()
     {
-        //
+        $horarios = Horario::whereHas('turma', function($query){
+          $query->where('ano', date('Y'));
+        })->orderBy('turma_id','dia', 'horario')->get();
+
+        $cargas = Carga::where([
+          ['created_at','>', date('Y').'-01-01 00:01:01'],
+          ['created_at','<', date('Y').'-12-31 00:01:01']
+        ])->get();
+        $turmas = Turma::where('ano', date('Y'))->orderBy('turno','turma')->get();
+
+        return view('horarios.index', ['horarios'=>$horarios, 'turmas' => $turmas, 'cargas'=>$cargas]);
     }
 
     /**
@@ -155,6 +167,53 @@ class HorariosController extends Controller
         return $horario;
       }
 
+    }
+
+    public function apiProfessorHorario(Request $request)
+    {
+      $data = $request->all();
+      if(isset($data['q'])){
+        $carga = Carga::find($data['q']);
+        $horario['professor'] = $carga->professor->professor;
+        for ($i=1; $i < 7 ; $i++) {
+          if ($i == 1) {  $horario['Primeiro'] = ['Segunda' => '', 'Terça' => '', 'Quarta' => '', 'Quinta' => '', 'Sexta' => '' ]; }
+          if ($i == 2) {  $horario['Segundo'] = ['Segunda' => '', 'Terça' => '', 'Quarta' => '', 'Quinta' => '', 'Sexta' => '' ]; }
+          if ($i == 3) {  $horario['Terceiro'] = ['Segunda' => '', 'Terça' => '', 'Quarta' => '', 'Quinta' => '', 'Sexta' => '' ]; }
+          if ($i == 4) {  $horario['Quarto'] = ['Segunda' => '', 'Terça' => '', 'Quarta' => '', 'Quinta' => '', 'Sexta' => '' ]; }
+          if ($i == 5) {  $horario['Quinto'] = ['Segunda' => '', 'Terça' => '', 'Quarta' => '', 'Quinta' => '', 'Sexta' => '' ]; }
+          if ($i == 6) {  $horario['Sexto'] = ['Segunda' => '', 'Terça' => '', 'Quarta' => '', 'Quinta' => '', 'Sexta' => '' ]; }
+        }
+
+        // $turmas = Turma::where('turno', 'Matutino')->get();
+        // foreach ($turmas as $turma ) {
+        //   foreach($turma->horarios as $hora){
+        //     if($hora->disciplina->id > 27){
+        //       $teste[]=[
+        //         'id' => $hora->id,
+        //         'disciplina_id' => $hora->disciplina_id,
+        //         'disciplina' => $hora->disciplina->disciplina,
+        //         'turma' => $turma->turma
+        //       ];
+        //     }
+        //   }
+        // }
+        // dd($teste);
+        foreach ($carga->disciplinas as $disciplina) {
+          foreach ($disciplina->horarios as $hora) {
+            if($hora->horario == 1){ $tempo = 'Primeiro';}
+            if($hora->horario == 2){ $tempo = 'Segundo';}
+            if($hora->horario == 3){ $tempo = 'Terceiro';}
+            if($hora->horario == 4){ $tempo = 'Quarto';}
+            if($hora->horario == 5){ $tempo = 'Quinto';}
+            if($hora->horario == 6){ $tempo = 'Sexto';}
+            $horario[$tempo][$hora->dia]= substr($hora->turma->turma, 0, 5)."($disciplina->disciplina)";
+
+          }
+
+        }
+
+        return $horario;
+      }
     }
 
     public function teste()

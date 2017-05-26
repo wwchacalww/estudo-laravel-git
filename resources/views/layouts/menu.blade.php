@@ -102,7 +102,9 @@
               <li class="active"><a href="{{ route('horarios.cargas.index')}}"><i class="fa fa-battery-half"></i> Cargas</a></li>
               <li class="active"><a href="{{ route('horarios.professors.index')}}"><i class="fa fa-graduation-cap"></i> Professores</a></li>
               <li class="active"><a href="{{ route('horarios.disciplinas.index')}}"><i class="fa fa-book"></i> Disciplinas</a></li>
-
+            @endif
+            @if(Auth::check() && Auth::user()->hasPermission('view.servidor'))
+              <li class="active"><a href="{{ route('horarios.index')}}"><i class="fa fa-calendar"></i> Grade Horária</a></li>
             @endif
             {{-- <li><a href="{{ route('empregados.index')}}"><i class="fa fa-list"></i> Lista</a></li> --}}
 
