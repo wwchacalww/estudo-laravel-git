@@ -154,7 +154,7 @@ class AlunosController extends Controller
       $contents = file($request->file('alunos'));
       $ln = 0;
       foreach ($contents as $linha) {
-        if (strlen($linha) < 5 && strlen($linha) > 2) {
+        if (strlen($linha) < 5 && strlen($linha) > 1) {
           $data['turma_id'] = substr($linha, 0, 2);
           $turma = \App\Turma::find($data['turma_id']);
           echo $turma->turma."<br>";
