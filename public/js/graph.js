@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 170);
+/******/ 	return __webpack_require__(__webpack_require__.s = 169);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -24231,8 +24231,8 @@ return zhTw;
 // }
 
 /* harmony default export */ __webpack_exports__["a"] = {
-  template: '<canvas width="800"></canvas>',
-  props: ['turmas', 'total', 'atrasados'],
+  template: '<canvas height="500"></canvas>',
+  props: ['turmas', 'total', 'atrasados', 'ocorrencias'],
   mounted: function mounted() {
     //-------------
     //- BAR CHART -
@@ -24253,6 +24253,12 @@ return zhTw;
         borderColor: "rgba(255,99,132,1)",
         borderWidth: 1,
         data: this.atrasados
+      }, {
+        label: "Alunos Com Ocorrências",
+        backgroundColor: "rgba(251, 117, 8, 0.6)",
+        borderColor: "rgb(244, 100, 19, 1)",
+        borderWidth: 1,
+        data: this.ocorrencias
       }]
     };
     var barChartCanvas = $(this.$el);
@@ -24295,7 +24301,7 @@ return zhTw;
       type: 'bar',
       data: areaChartData,
       options: {
-        responsive: false,
+
         scales: {
           yAxes: [{
             ticks: {
@@ -47339,8 +47345,7 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 /* 166 */,
 /* 167 */,
 /* 168 */,
-/* 169 */,
-/* 170 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(164);

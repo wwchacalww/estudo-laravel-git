@@ -25,12 +25,15 @@ class HomeController extends Controller
       $chart['Matutino']['turmas'] = array();
       $chart['Matutino']['total'] = array();
       $chart['Matutino']['atrasados'] = array();
+      $chart['Matutino']['ocorrencias'] = array();
       $chart['Vespertino']['turmas'] = array();
       $chart['Vespertino']['total'] = array();
       $chart['Vespertino']['atrasados'] = array();
+      $chart['Vespertino']['ocorrencias'] = array();
       foreach($turmas as $turma){
         $tt = count($turma->alunos);
         $dis = 0;
+        $ocorre = 0;
         foreach($turma->alunos as $pupilo){
           $age = Carbon::parse($pupilo->dn)->age;
           if($turma->serie == '6º Ano' && $age > 12){
@@ -46,28 +49,36 @@ class HomeController extends Controller
             $students['Atrasados']++;
             $dis++;
           }
+          if (count($pupilo->ocorrencias) > 0) {
+            $ocorre++;
+          }
         }
         $students['Total'] += $tt;
         if($turma->turno == 'Matutino'){
           array_push($chart['Matutino']['turmas'], substr($turma->turma, 0, 5));
           array_push($chart['Matutino']['total'], $tt);
           array_push($chart['Matutino']['atrasados'], $dis);
+          array_push($chart['Matutino']['ocorrencias'], $ocorre);
           $students['Matutino']['total'] += $tt;
         }else{
           array_push($chart['Vespertino']['turmas'], substr($turma->turma, 0, 5));
           array_push($chart['Vespertino']['total'], $tt);
           array_push($chart['Vespertino']['atrasados'], $dis);
+          array_push($chart['Vespertino']['ocorrencias'], $ocorre);
           $students['Vespertino']['total'] += $tt;
         }
       }
       $chart['Matutino']['turmas'] = json_encode($chart['Matutino']['turmas']);
       $chart['Matutino']['total'] = json_encode($chart['Matutino']['total']);
       $chart['Matutino']['atrasados'] = json_encode($chart['Matutino']['atrasados']);
+      $chart['Matutino']['ocorrencias'] = json_encode($chart['Matutino']['ocorrencias']);
       $chart['Vespertino']['turmas'] = json_encode($chart['Vespertino']['turmas']);
       $chart['Vespertino']['total'] = json_encode($chart['Vespertino']['total']);
       $chart['Vespertino']['atrasados'] = json_encode($chart['Vespertino']['atrasados']);
+      $chart['Vespertino']['ocorrencias'] = json_encode($chart['Vespertino']['ocorrencias']);
 
       return view('welcome',['turmas'=>$turmas, 'students'=>$students, 'chart' => $chart ]);
+
     }
 
     /**

@@ -19,4 +19,9 @@ class Aluno extends Model
     {
         return $this->belongsToMany('App\Ocorrencia');
     }
+
+    public function rendimentos()
+    {
+      return $this->hasMany('App\Rendimento');
+    }
 }

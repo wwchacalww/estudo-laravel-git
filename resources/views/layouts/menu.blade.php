@@ -111,6 +111,28 @@
           </ul>
         </li>
       @endif
+
+      <!-- Menu Rendimento -->
+      @if(Auth::check() && Auth::user()->hasPermission('view.aluno'))
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-line-chart"></i> <span>Rendimento</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            @if(Auth::check() && Auth::user()->hasPermission('view.aluno'))
+              <li class="active"><a href="{{ route('rendimentos.index')}}"><i class="fa fa-linkedin-square"></i> Notas e Faltas</a></li>
+            @endif
+            @if(Auth::check() && Auth::user()->hasPermission('create.aluno'))
+              <li class="active"><a href="{{ route('rendimentos.create')}}"><i class="fa fa-puzzle-piece"></i> Grade Horária</a></li>
+            @endif
+            {{-- <li><a href="{{ route('empregados.index')}}"><i class="fa fa-list"></i> Lista</a></li> --}}
+
+          </ul>
+        </li>
+      @endif
       {{--
       <li class="treeview">
         <a href="#">

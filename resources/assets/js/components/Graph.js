@@ -42,8 +42,8 @@ import Chart from 'chart.js';
 // }
 
 export default{
-  template: '<canvas width="800"></canvas>',
-  props: ['turmas', 'total', 'atrasados'],
+  template: '<canvas height="500"></canvas>',
+  props: ['turmas', 'total', 'atrasados', 'ocorrencias'],
   mounted: function(){
     //-------------
     //- BAR CHART -
@@ -66,6 +66,13 @@ export default{
           borderColor: "rgba(255,99,132,1)",
           borderWidth: 1,
           data: this.atrasados
+        },
+        {
+          label: "Alunos Com Ocorrências",
+          backgroundColor: "rgba(251, 117, 8, 0.6)",
+          borderColor: "rgb(244, 100, 19, 1)",
+          borderWidth: 1,
+          data: this.ocorrencias
         }
       ]
     };
@@ -109,7 +116,7 @@ export default{
       type: 'bar',
       data: areaChartData,
       options:{
-        responsive: false,
+
         scales: {
             yAxes: [{
                 ticks: {

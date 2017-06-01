@@ -28,4 +28,9 @@ class Disciplina extends Model
   {
     return $this->hasMany('App\Horario');
   }
+
+  public function rendimentos()
+  {
+    return $this->hasMany('App\Rendimento');
+  }
 }

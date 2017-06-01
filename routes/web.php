@@ -109,3 +109,10 @@ Route::group(['as'=>'alunos.', 'prefix'=>'alunos', 'middleware'=>['auth','acl']]
   Route::post('fileTesteStore', ['as'=>'fileTesteStore', 'uses'=>'AlunosController@fileTesteStore', 'is'=>'administrador']);
   Route::post('fileTesteNovo', ['as'=>'fileTesteNovo', 'uses'=>'AlunosController@fileTesteNovo', 'is'=>'administrador']);
 });
+
+//Rendimento
+Route::group(['as'=>'rendimentos.', 'prefix'=> 'rendimentos', 'middleware' =>['auth', 'acl']], function(){
+  Route::get('create', ['as'=>'create', 'uses'=>'RendimentosController@create', 'can'=>'create.aluno']);
+  Route::post('store', ['as'=>'store', 'uses'=>'RendimentosController@store', 'can'=>'create.aluno']);
+  Route::get('', ['as'=>'index', 'uses'=>'RendimentosController@index', 'can'=>'view.aluno']);
+});
