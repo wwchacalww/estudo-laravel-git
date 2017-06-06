@@ -1,5 +1,7 @@
 @extends('layouts.dashboard')
 @section('css')
+  <!-- CSS do Boletim -->
+  <link rel="stylesheet" href="{{asset('css/boletim.css')}}">
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
   <!-- Font Awesome -->
@@ -11,6 +13,7 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{asset('dist/css/skins/_all-skins.min.css')}}">
+
 @endsection
 @section('breadcrumb')
   <h1>
@@ -97,6 +100,7 @@
 
     </div>
 
+    {{-- Se tiver Ocorrencias --}}
     @if(count($aluno->ocorrencias) > 0)
       <div class="box box-danger">
         <div class="box-header with-border">
@@ -138,6 +142,77 @@
       </div>
     @endif
 
+    {{-- Se Tiver notas --}}
+    @if(count($aluno->rendimentos) > 0)
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Boletim</h3>
+        </div>
+        <div class="box-body">
+          <table class="table table-responsive table-boletim">
+            <thead>
+              <tr>
+                <th rowspan="2">
+                  Disciplina
+                </th>
+                <th colspan="2">1º Bimestre</th>
+                <th colspan="2">2º Bimestre</th>
+                <th colspan="2">3º Bimestre</th>
+                <th colspan="2">4º Bimestre</th>
+              </tr>
+              <tr>
+                <th>Nts</th><th>Flts</th>
+                <th>Nts</th><th>Flts</th>
+                <th>Nts</th><th>Flts</th>
+                <th>Nts</th><th>Flts</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach($disciplinas as $disciplina)
+                <tr>
+                  <th>
+                    {{$disciplina}}
+                  </th>
+                  @if(count($boletim['primeiro'][$disciplina]) == 2)
+                    <td><p class="text-{{ $boletim['primeiro'][$disciplina]['nota'] < 5 ? 'danger':'info' }}">{{$boletim['primeiro'][$disciplina]['nota']}}</p></td>
+                    <td>{{$boletim['primeiro'][$disciplina]['faltas']}}</td>
+                  @else
+                    <td></td>
+                    <td></td>
+                  @endif
+
+                  @if(count($boletim['segundo'][$disciplina]) == 2)
+                    <td><p class="text-{{ $boletim['segundo'][$disciplina]['nota'] < 5 ? 'danger':'info' }}">{{$boletim['segundo'][$disciplina]['nota']}}</p></td>
+                    <td>{{$boletim['segundo'][$disciplina]['faltas']}}</td>
+                  @else
+                    <td></td>
+                    <td></td>
+                  @endif
+
+                  @if(count($boletim['terceiro'][$disciplina]) == 2)
+                    <td><p class="text-{{ $boletim['terceiro'][$disciplina]['nota'] < 5 ? 'danger':'info' }}">{{$boletim['terceiro'][$disciplina]['nota']}}</p></td>
+                    <td>{{$boletim['terceiro'][$disciplina]['faltas']}}</td>
+                  @else
+                    <td></td>
+                    <td></td>
+                  @endif
+
+                  @if(count($boletim['quarto'][$disciplina]) == 2)
+                    <td><p class="text-{{ $boletim['quarto'][$disciplina]['nota'] < 5 ? 'danger':'info' }}">{{$boletim['quarto'][$disciplina]['nota']}}</p></td>
+                    <td>{{$boletim['quarto'][$disciplina]['faltas']}}</td>
+                  @else
+                    <td></td>
+                    <td></td>
+                  @endif
+
+                </tr>
+
+              @endforeach
+            </tbody>
+          </table>
+        </div>
+      </div>
+    @endif
   </div>
   <!-- /Coluna Esquerda -->
   <!-- Coluna Direita -->

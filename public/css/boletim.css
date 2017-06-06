@@ -1,0 +1,15 @@
+.table-boletim {
+  border: 1px solid #ccc;
+}
+
+.table-boletim th {
+    text-align: center;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+}
+
+.table-boletim td{
+  text-align: center;
+  border: 1px solid #ccc;
+  vertical-align: middle;
+}

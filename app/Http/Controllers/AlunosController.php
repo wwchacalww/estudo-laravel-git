@@ -96,8 +96,34 @@ class AlunosController extends Controller
     {
       setlocale(LC_ALL, "pt_BR", "pt_BR.iso-8859-1", "pt_BR.utf-8", "portuguese");
       $dn = Carbon::parse($aluno->dn);
+      $disciplinas = ['Artes', 'Ciências Naturais', 'Educação Física', 'Geografia', 'História', 'Inglês', 'Matemática', 'Português', 'Práticas Diversificadas I', 'Práticas Diversificadas II'];
+      foreach ($disciplinas as $disciplina) {
+        $boletim['primeiro'][$disciplina] = '';
+        $boletim['segundo'][$disciplina] = '';
+        $boletim['terceiro'][$disciplina] = '';
+        $boletim['quarto'][$disciplina] = '';
+      }
 
-      return  view('alunos.show',['aluno'=>$aluno , 'dn' => $dn]);
+      if (count($aluno->rendimentos) > 0) {
+        foreach ($aluno->rendimentos as $rendimento) {
+          if ($rendimento['bimestre'] == 1) {
+            $boletim['primeiro'][$rendimento->disciplina->habilidade]['nota'] = $rendimento->nota;
+            $boletim['primeiro'][$rendimento->disciplina->habilidade]['faltas'] = $rendimento->faltas;
+          }elseif ($rendimento['bimestre'] == 2) {
+            $boletim['segundo'][$rendimento->disciplina->habilidade]['nota'] = $rendimento->nota;
+            $boletim['segundo'][$rendimento->disciplina->habilidade]['faltas'] = $rendimento->faltas;
+          }elseif ($rendimento['bimestre'] == 3) {
+            $boletim['terceiro'][$rendimento->disciplina->habilidade]['nota'] = $rendimento->nota;
+            $boletim['terceiro'][$rendimento->disciplina->habilidade]['faltas'] = $rendimento->faltas;
+          }elseif ($rendimento['bimestre'] == 4) {
+            $boletim['quarto'][$rendimento->disciplina->habilidade]['nota'] = $rendimento->nota;
+            $boletim['quarto'][$rendimento->disciplina->habilidade]['faltas'] = $rendimento->faltas;
+          }
+        }
+      }
+
+
+      return  view('alunos.show',['aluno'=>$aluno , 'dn' => $dn, 'boletim' => $boletim, 'disciplinas' => $disciplinas]);
     }
 
 

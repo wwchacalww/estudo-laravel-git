@@ -51,7 +51,10 @@ class RendimentosController extends Controller
         //Manipulando arquivo Notas
         $boletim = array();
         foreach ($notas as $nota) {
-          $x = explode(" ", str_replace("\r\n", "", $nota));
+          $nota = str_replace("\r","", $nota);
+          $nota = str_replace("\n","", $nota);
+          $nota = str_replace("\f","", $nota);
+          $x = explode(" ", $nota);
           $matricula = $x[0];
           for ($i=3; $i < count($x) ; $i++) {
             if (is_numeric($x[$i])) {
@@ -61,7 +64,10 @@ class RendimentosController extends Controller
         }
         //Manipulando Arquivo Faltas
         foreach ($faltas as $falta) {
-          $x = explode(" ", str_replace("\r\n", "", $falta));
+          $falta = str_replace("\r","", $falta);
+          $falta = str_replace("\n","", $falta);
+          $falta = str_replace("\f","", $falta);
+          $x = explode(" ", $falta);
           $matricula = $x[0];
           for ($i=3; $i < count($x) ; $i++) {
             if (is_numeric($x[$i])) {
