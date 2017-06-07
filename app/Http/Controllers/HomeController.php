@@ -30,6 +30,13 @@ class HomeController extends Controller
       $chart['Vespertino']['total'] = array();
       $chart['Vespertino']['atrasados'] = array();
       $chart['Vespertino']['ocorrencias'] = array();
+      $bos['Matutino']['infracao'] = array();
+      $bos['Matutino']['base'] = array();
+      $bos['Matutino']['total'] = 0;
+      $bos['Vespertino']['infracao'] = array();
+      $bos['Vespertino']['base'] = array();
+      $bos['Vespertino']['total'] = 0;
+
       foreach($turmas as $turma){
         $tt = count($turma->alunos);
         $dis = 0;
@@ -51,6 +58,22 @@ class HomeController extends Controller
           }
           if (count($pupilo->ocorrencias) > 0) {
             $ocorre++;
+            foreach ($pupilo->ocorrencias as $ocorrencia) {
+              $bos[$turma->turno]['total']++;
+              foreach ($ocorrencia->indisciplinas as $infracao) {
+                if(array_key_exists($infracao->indisciplina, $bos[$turma->turno]['infracao'])){
+                  $bos[$turma->turno]['infracao'][$infracao->indisciplina]++;
+                }else{
+                  $bos[$turma->turno]['infracao'][$infracao->indisciplina] = 1;
+                }
+
+                if(array_key_exists($infracao->base, $bos[$turma->turno]['base'])){
+                  $bos[$turma->turno]['base'][$infracao->base]++;
+                }else{
+                  $bos[$turma->turno]['base'][$infracao->base] = 1;
+                }
+              }
+            }
           }
         }
         $students['Total'] += $tt;
@@ -76,8 +99,8 @@ class HomeController extends Controller
       $chart['Vespertino']['total'] = json_encode($chart['Vespertino']['total']);
       $chart['Vespertino']['atrasados'] = json_encode($chart['Vespertino']['atrasados']);
       $chart['Vespertino']['ocorrencias'] = json_encode($chart['Vespertino']['ocorrencias']);
-
-      return view('welcome',['turmas'=>$turmas, 'students'=>$students, 'chart' => $chart ]);
+      
+      return view('welcome',['turmas'=>$turmas, 'students'=>$students, 'chart' => $chart, 'bos' => $bos ]);
 
     }
 

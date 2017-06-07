@@ -36,7 +36,6 @@
 @endsection
 @section('content')
 
-
     <!-- Small boxes (Stat box) -->
     <div class="row">
       <div class="col-lg-3 col-xs-6">
@@ -178,9 +177,134 @@
       </section>
       <!-- /.Left col -->
 
-    
+
     </div>
     <!-- /.row (main row) -->
+    <!-- Duas Colunas - Relatórios Disciplinar -->
+    <div class="row">
+      <!-- Relatório Disciplinar -->
+      <div class="col-md-6">
+        <div class="box box-danger">
+          <div class="box-header with-border">
+            <h3 class="box-title">Tipos de Ocorrências</h3>
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+          </div>
+          <div class="box-body">
+            <table class="table table-condensed">
+              <tr>
+                <th>Total de Ocorrências do Matutino <span class="badge bg-red">{{$bos['Matutino']['total']}}</span></th>
+                <th style="width: 20%"></th>
+                <th>%</th>
+              </tr>
+              @foreach($bos['Matutino']['infracao'] as $key => $value)
+                <?php
+                 $cor = 'rgb('.rand(0,200).', '.rand(0,200).', '.rand(0,200).')';
+                ?>
+                <tr>
+                  <td>{{$key}} <span class="badge" style="background-color:{{$cor}}">{{$value}}</span></td>
+                  <td>
+                    <div class="progress progress-xs">
+                      <div class="progress-bar" style="width: {{ round((100*$value)/$bos['Matutino']['total'])}}%; background-color: {{$cor}}"></div>
+                    </div>
+                  </td>
+                  <td><span class="badge" style="background-color:{{$cor}}">{{ round((100*$value)/$bos['Matutino']['total'])}}%</span></td>
+                </tr>
+              @endforeach
+            </table>
+              <hr>
+            <table class="table table-condensed">
+              <tr>
+                <th>Total de Ocorrências do Vespertino <span class="badge bg-red">{{$bos['Vespertino']['total']}}</span></th>
+                <th style="width: 20%"></th>
+                <th>%</th>
+              </tr>
+              @foreach($bos['Vespertino']['infracao'] as $key => $value)
+                <?php
+                 $cor = 'rgb('.rand(0,200).', '.rand(0,200).', '.rand(0,200).')';
+                ?>
+                <tr>
+                  <td>{{$key}} <span class="badge" style="background-color:{{$cor}}">{{$value}}</span></td>
+                  <td>
+                    <div class="progress progress-xs">
+                      <div class="progress-bar" style="width: {{ round((100*$value)/$bos['Vespertino']['total'])}}%; background-color: {{$cor}}"></div>
+                    </div>
+                  </td>
+                  <td><span class="badge" style="background-color: {{$cor}}">{{ round((100*$value)/$bos['Vespertino']['total'])}}%</span></td>
+                </tr>
+              @endforeach
+            </table>
+
+          </div>
+        </div>
+      </div>
+      <!-- /Relatório Disciplinar -->
+      <!-- Relatório Rendimento -->
+      <div class="col-md-6">
+        <div class="box box-danger">
+          <div class="box-header with-border">
+            <h3 class="box-title">Base das Ocorrências</h3>
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+            </div>
+          </div>
+          <div class="box-body">
+            <table class="table table-condensed">
+              <tr>
+                <th>Total de Ocorrências do Matutino <span class="badge bg-red">{{$bos['Matutino']['total']}}</span></th>
+                <th style="width: 20%"></th>
+                <th>%</th>
+              </tr>
+              @foreach($bos['Matutino']['base'] as $key => $value)
+                <?php
+                 $cor = 'rgb('.rand(0,200).', '.rand(0,200).', '.rand(0,200).')';
+                ?>
+                <tr>
+                  <td>{{$key}} <span class="badge" style="background-color:{{$cor}}">{{$value}}</span></td>
+                  <td>
+                    <div class="progress progress-xs">
+                      <div class="progress-bar" style="width: {{ round((100*$value)/$bos['Matutino']['total'])}}%; background-color: {{$cor}}"></div>
+                    </div>
+                  </td>
+                  <td><span class="badge" style="background-color:{{$cor}}">{{ round((100*$value)/$bos['Matutino']['total'])}}%</span></td>
+                </tr>
+              @endforeach
+            </table>
+              <hr>
+            <table class="table table-condensed">
+              <tr>
+                <th>Total de Ocorrências do Vespertino <span class="badge bg-red">{{$bos['Vespertino']['total']}}</span></th>
+                <th style="width: 20%"></th>
+                <th>%</th>
+              </tr>
+              @foreach($bos['Vespertino']['base'] as $key => $value)
+                <?php
+                 $cor = 'rgb('.rand(0,200).', '.rand(0,200).', '.rand(0,200).')';
+                ?>
+                <tr>
+                  <td>{{$key}} <span class="badge" style="background-color:{{$cor}}">{{$value}}</span></td>
+                  <td>
+                    <div class="progress progress-xs">
+                      <div class="progress-bar" style="width: {{ round((100*$value)/$bos['Vespertino']['total'])}}%; background-color: {{$cor}}"></div>
+                    </div>
+                  </td>
+                  <td><span class="badge" style="background-color: {{$cor}}">{{ round((100*$value)/$bos['Vespertino']['total'])}}%</span></td>
+                </tr>
+              @endforeach
+            </table>
+
+          </div>
+        </div>
+      </div>
+      <!-- /Relatório Rendimento -->
+    </div>
+    <!-- /Duas Colunas - Relatórios Disciplinar -->
+
 @endsection
 @section('jsScripts')
   <!-- jQuery 2.2.3 -->
