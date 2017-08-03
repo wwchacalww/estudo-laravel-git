@@ -34,6 +34,7 @@
     <div class="box box-primary">
       <div class="box-header with-border">
         <h3 class="box-title">{{$aluno->nome}} - [ {{ $aluno->matricula }} ]</h3>
+          <a href="{{url('alunos/'.$aluno->id.'/relatorio')}}" target="_blank" class="pull-right btn btn-warning btn-xs"> <i class="fa fa-list-ul"></i> | Relatório</a>
         @if(Auth::check() && Auth::user()->hasPermission('update.aluno'))
           <a href="{{url('alunos/'.$aluno->id.'/edit')}}" class="pull-right btn btn-info btn-xs"> <i class="fa fa-edit"></i> | Editar</a>
         @endif
@@ -245,6 +246,45 @@
                     <b style="color:{{ $disciplina->cor }}">{{$disciplina->disciplina }}</b>
                   @endforeach
                 </td>
+              </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Horário</h3>
+      </div>
+      <div class="box-body table-responsive no-padding">
+        {{-- Capturando o Horário num array  --}}
+        <?php
+
+        foreach ($aluno->turma->horarios as $horario) {
+          $horarios[$horario->horario][$horario->dia]= $horario->disciplina->habilidade;
+        }
+
+         ?>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Segunda</th>
+              <th>Terça</th>
+              <th>Quarta</th>
+              <th>Quinta</th>
+              <th>Sexta</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach($horarios as $key => $value)
+              <tr>
+                <td>{{$key}}º</td>
+                <td>{{$value['Segunda']}}</td>
+                <td>{{$value['Terça']}}</td>
+                <td>{{$value['Quarta']}}</td>
+                <td>{{$value['Quinta']}}</td>
+                <td>{{$value['Sexta']}}</td>
               </tr>
             @endforeach
           </tbody>

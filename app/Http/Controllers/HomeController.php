@@ -99,7 +99,10 @@ class HomeController extends Controller
       $chart['Vespertino']['total'] = json_encode($chart['Vespertino']['total']);
       $chart['Vespertino']['atrasados'] = json_encode($chart['Vespertino']['atrasados']);
       $chart['Vespertino']['ocorrencias'] = json_encode($chart['Vespertino']['ocorrencias']);
-      
+      arsort($bos['Matutino']['infracao']);
+      arsort($bos['Matutino']['base']);
+      arsort($bos['Vespertino']['infracao']);
+      arsort($bos['Vespertino']['base']);
       return view('welcome',['turmas'=>$turmas, 'students'=>$students, 'chart' => $chart, 'bos' => $bos ]);
 
     }

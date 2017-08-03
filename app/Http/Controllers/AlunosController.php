@@ -126,8 +126,10 @@ class AlunosController extends Controller
       return  view('alunos.show',['aluno'=>$aluno , 'dn' => $dn, 'boletim' => $boletim, 'disciplinas' => $disciplinas]);
     }
 
-
-
+    public function relatorio(Aluno $aluno)
+    {
+      return response()->view('alunos.relatorio',['aluno'=>$aluno])->header('Content-Type', 'application/pdf');
+    }
     public function fileTeste()
     {
       return view('alunos.fileTeste');

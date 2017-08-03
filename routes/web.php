@@ -108,6 +108,7 @@ Route::group(['as'=>'alunos.', 'prefix'=>'alunos', 'middleware'=>['auth','acl']]
   Route::get('fileTeste', ['as'=>'fileTeste', 'uses'=>'AlunosController@fileTeste','is'=>'administrador']);
   Route::post('fileTesteStore', ['as'=>'fileTesteStore', 'uses'=>'AlunosController@fileTesteStore', 'is'=>'administrador']);
   Route::post('fileTesteNovo', ['as'=>'fileTesteNovo', 'uses'=>'AlunosController@fileTesteNovo', 'is'=>'administrador']);
+  Route::get('{aluno}/relatorio', ['as'=>'relatorio', 'uses'=>'AlunosController@relatorio', 'can'=>'view.aluno']);
 });
 
 //Rendimento
