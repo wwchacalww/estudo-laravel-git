@@ -105,8 +105,9 @@
             @endif
             @if(Auth::check() && Auth::user()->hasPermission('view.servidor'))
               <li class="active"><a href="{{ route('horarios.index')}}"><i class="fa fa-calendar"></i> Grade Horária</a></li>
+              <li class="active"><a href="{{ route('horarios.impressao')}}" target="_blank" ><i class="fa fa-print"></i> Imprimir</a></li>
             @endif
-            {{-- <li><a href="{{ route('empregados.index')}}"><i class="fa fa-list"></i> Lista</a></li> --}}
+            {{-- <li><a href="{{ route('empregados.index')}}" ><i class="fa fa-list"></i> Lista</a></li> --}}
 
           </ul>
         </li>
@@ -133,6 +134,26 @@
           </ul>
         </li>
       @endif
+
+      <!-- Relatorios -->
+      @if(Auth::check() && Auth::user()->hasPermission('view.aluno'))
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-th-large"></i> <span>Relatórios</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            @if(Auth::check() && Auth::user()->hasPermission('view.aluno'))
+              <li class="active"><a href="{{ route('ocorrencias.relatorio')}}" target="_blank"><i class="fa fa-hand-o-right"></i> Disciplinar</a></li>
+            @endif
+            {{-- <li><a href="{{ route('empregados.index')}}"><i class="fa fa-list"></i> Lista</a></li> --}}
+
+          </ul>
+        </li>
+      @endif
+      <!-- /Relatorios -->
       {{--
       <li class="treeview">
         <a href="#">

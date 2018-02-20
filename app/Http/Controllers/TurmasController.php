@@ -10,6 +10,7 @@ class TurmasController extends Controller
     public function index()
     {
       $turmas = Turma::where('ano', date('Y'))->get();
+      // $atrasados[$turma->id] = 0;
       foreach ($turmas as $turma ) {
         $atrasados[$turma->id] = 0;
         foreach ($turma->alunos as $aluno) {

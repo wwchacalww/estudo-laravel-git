@@ -14,8 +14,9 @@ class CargasController extends Controller
      */
     public function index()
     {
-        $cargas = Carga::all();
-        $turmas = \App\Turma::where('ano',2017)->pluck('id','turma');
+        //$cargas = Carga::all();
+        $cargas = Carga::where('created_at', '>', '2018-02-02 00:01:01')->get();
+        $turmas = \App\Turma::where('ano', date('Y'))->pluck('id','turma');
         return view('cargas.index',['cargas'=>$cargas, 'turmas'=>$turmas]);
     }
 
@@ -73,7 +74,7 @@ class CargasController extends Controller
     {
 
       $cargas = Carga::all();
-      $turmas = \App\Turma::where('ano',2017)->pluck('id','turma');
+      $turmas = \App\Turma::where('ano',date('Y'))->pluck('id','turma');
       $enturmado = array();
       foreach ($carga->turmas as $value) {
          $enturmado[]= $value->id;
@@ -134,10 +135,91 @@ class CargasController extends Controller
       //   $carga->turmas()->attach($carga_turmas);
       // }
 
-      $disciplinas = \App\Disciplina::all();
+      $disciplinas = \App\Disciplina::where('created_at','>','2018-01-01')->get();
       foreach ($disciplinas as $disciplina) {
-        $disciplina->carga_id = $disciplina->professor->cargas[0]->id;
-        $disciplina->update();
+        // $disciplina->carga_id = $disciplina->professor->cargas[0]->id;
+        // $disciplina->update();
+        echo "(".$disciplina->id.") ".$disciplina->disciplina." - ".$disciplina->professor->professor." ";
+        foreach ($disciplina->professor->cargas as $value) {
+          if($value->created_at > "2018-01-01 00:01:01"){
+            if($disciplina->disciplina == "PORT3"){
+              if ( $value->carga == "PORT3") {
+                $disciplina->carga_id = $value->id;
+                $disciplina->update();
+                echo $value->carga." ";
+              }
+            }elseif($disciplina->disciplina == "CN3" ){
+              if ($value->carga == "Ciências 3") {
+                $disciplina->carga_id = $value->id;
+                $disciplina->update();
+                echo $value->carga;
+              }
+            }elseif($disciplina->disciplina == "PORT4" ){
+              if ($value->carga == "Português 4") {
+                $disciplina->carga_id = $value->id;
+                $disciplina->update();
+                echo $value->carga;
+              }
+
+            }elseif($disciplina->disciplina == "CN6" ){
+              if ($value->carga == "Ciências 6") {
+                $disciplina->carga_id = $value->id;
+                $disciplina->update();
+                echo $value->carga;
+              }
+
+            }elseif($disciplina->disciplina == "LEM2" ){
+              if ($value->carga == "Inglẽs 2") {
+                $disciplina->carga_id = $value->id;
+                $disciplina->update();
+                echo $value->carga;
+              }
+
+            }elseif($disciplina->id == "75" ){
+              if ($value->carga == "PORT3") {
+                $disciplina->carga_id = $value->id;
+                $disciplina->update();
+                echo $value->carga;
+              }
+
+            }elseif($disciplina->id == "80" ){
+              if ($value->carga == "Inglês 2") {
+                $disciplina->carga_id = $value->id;
+                $disciplina->update();
+                echo $value->carga;
+              }
+
+            }elseif($disciplina->id == "82" ){
+              if ($value->carga == "PORT3") {
+                $disciplina->carga_id = $value->id;
+                $disciplina->update();
+                echo $value->carga;
+              }
+
+            }elseif($disciplina->id == "88" ){
+              if ($value->carga == "Inglês 2") {
+                $disciplina->carga_id = $value->id;
+                $disciplina->update();
+                echo $value->carga;
+              }
+
+            }elseif($disciplina->id >= "114" && $disciplina->id < 117 ){
+              if ($value->carga == "Inglês 4") {
+                $disciplina->carga_id = $value->id;
+                $disciplina->update();
+                echo $value->carga;
+              }
+
+            }else{
+              $disciplina->carga_id = $value->id;
+              $disciplina->update();
+              echo $value->carga." ======= ";
+            }
+
+          }
+
+        }
+        echo "<br>";
       }
 
       return 'oi';

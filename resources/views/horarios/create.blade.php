@@ -34,11 +34,13 @@
 @section('content')
 <div class="row">
   <div class="col-md-12" id="app">
+
     <div class="box box-primary">
       <div class="box-header with-border">
         <h3 class="box-title">Novo Horário Matutino</h3>
       </div>
       <!-- /.box-header -->
+
       <!-- form start -->
         <div class="box-body">
 
@@ -50,7 +52,7 @@
                   <select class="form-control" name="turma_id" id="turma_id" @change="turma" v-model="turma_id">
                     <option></option>
                     @foreach($turmas as $turma)
-                      @if($turma->turno == 'Matutino')
+                      @if($turma->turno == 'Vespertino')
                         <option value="{{$turma->id}}">{{$turma->turma}}</option>
                       @endif
                     @endforeach
@@ -100,7 +102,7 @@
               </form>
             </div>
           </div>
-
+<!--
           <table class="table table-responsive table-hover">
             <thead>
               <tr style="border: 1px solid #000;">
@@ -162,10 +164,12 @@
             </tbody>
           </table>
 
+-->
 
         </div>
         <!-- /.box-body -->
     </div>
+
 
     <!-- HOrario Vespertino -->
     <div class="box box-primary">

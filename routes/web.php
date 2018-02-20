@@ -46,6 +46,7 @@ Route::group(['as'=>'ocorrencias.', 'prefix'=>'ocorrencias','middleware'=>['auth
   Route::get('{ocorrencia}/edit', ['as'=>'edit', 'uses'=>'OcorrenciasController@edit','can'=>'update.disciplinar']);
   Route::put('{ocorrencia}/update', ['as'=>'update', 'uses'=>'OcorrenciasController@update', 'can'=>'update.disciplinar']);
   Route::get('{ocorrencia}/print', ['as'=>'print', 'uses'=>'OcorrenciasController@print', 'can'=>'view.disciplinar']);
+  Route::get('relatorio', ['as'=>'relatorio', 'uses'=>'OcorrenciasController@relatorio', 'can'=>'view.disciplinar']);
 });
 
 //Servidores
@@ -87,12 +88,13 @@ Route::group(['as'=>'horarios.','prefix'=>'horarios','middleware'=>['auth','acl'
   Route::post('disciplinas/store',['as'=>'disciplinas.store', 'uses'=>'DisciplinasController@store', 'is'=>'administrador|diretor|administrativo']);
   Route::get('disciplinas/{disciplina}/edit',['as'=>'disciplinas.edit','uses'=>'DisciplinasController@edit', 'is'=>'administrador|diretor|administrativo']);
   Route::put('disciplinas/{disciplina}/update',['as'=>'disciplinas.update','uses'=>'DisciplinasController@update', 'is'=>'administrador|diretor|administrativo']);
-  // Route::get('create', ['as'=>'create', 'uses'=>'HorariosController@create', 'can'=>'create.turma']);
+  Route::get('create', ['as'=>'create', 'uses'=>'HorariosController@create', 'can'=>'create.turma']);
   Route::post('store',['as'=>'store', 'uses'=>'HorariosController@store','can'=>'create.turma']);
   Route::get('',['as'=>'index','uses'=>'HorariosController@index', 'can'=>'view.turma']);
   Route::get('turma_disciplinas', ['as'=>'turma_disciplinas', 'uses'=>'HorariosController@apiTurmaDisciplina', 'can'=>'view.turma']);
   Route::get('api_horario', ['as'=>'api_horario', 'uses'=>'HorariosController@apiHorario', 'can'=>'view.turma']);
   Route::get('api_professor_horario', ['as'=>'api_professor_horario', 'uses'=>'HorariosController@apiProfessorHorario', 'can'=>'view.turma']);
+  Route::get('impressao', ['as'=>'impressao', 'uses'=>'HorariosController@impressao', 'can'=>'view.turma']);
   // Route::get('teste', ['as'=>'teste', 'uses'=>'HorariosController@teste', 'can'=>'view.turma']);
 });
 

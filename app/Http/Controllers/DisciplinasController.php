@@ -46,6 +46,7 @@ class DisciplinasController extends Controller
           'turmas' => 'required'
       ]);
       $data = $request->all();
+      $data['ano'] = date('Y');
 
       $disciplina = Disciplina::create($data);
 

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Carbon;
 use App\Turma;
 use App\Carga;
+use PDF;
 class HorariosController extends Controller
 {
     /**
@@ -27,6 +28,20 @@ class HorariosController extends Controller
         $turmas = Turma::where('ano', date('Y'))->orderBy('turno','turma')->get();
 
         return view('horarios.index', ['horarios'=>$horarios, 'turmas' => $turmas, 'cargas'=>$cargas]);
+    }
+
+    public function impressao()
+    {
+      $horarios = Horario::whereHas('turma', function($query){
+        $query->where('ano', date('Y'));
+      })->orderBy('turma_id','dia', 'horario')->get();
+
+      $cargas = Carga::where([
+        ['created_at','>', date('Y').'-01-01 00:01:01'],
+        ['created_at','<', date('Y').'-12-31 00:01:01']
+      ])->get();
+      $turmas = Turma::where('ano', date('Y'))->orderBy('turno','turma')->get();
+      return response()->view('horarios.impressao',['horarios'=>$horarios, 'turmas'=> $turmas, 'cargas'=>$cargas])->header('Content-Type', 'application/pdf');
     }
 
     /**
