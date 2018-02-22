@@ -51,6 +51,7 @@
           <tr>
             <th width="20%">Disciplina</th>
             <th>Professor</th>
+            <th>Sala</th>
             <th>Turmas</th>
             <th>Editar</th>
           </tr>
@@ -65,6 +66,9 @@
                 </td>
                 <td>
                   {{ $disciplina->professor->professor}}
+                </td>
+                <td>
+                  {{ $disciplina->sala}}
                 </td>
                 <td>
                   <select class="form-control">
@@ -117,6 +121,12 @@
             <label for="carga">Habilidade</label>
             <input type="text" class="form-control" name="habilidade" value="{{ $materia->habilidade }}"  >
           </div>
+
+          <div class="form-group">
+            <label for="carga">Sala</label>
+            <input type="text" class="form-control" name="sala" value="{{ $materia->sala }}"  >
+          </div>
+
           <div class="form-group">
             <label>Cor</label>
 

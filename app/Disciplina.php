@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Disciplina extends Model
 {
   protected $fillable = [
-      'disciplina', 'habilidade', 'cor', 'carga_id', 'professor_id', 'ano',
+      'disciplina', 'habilidade', 'sala', 'cor', 'carga_id', 'professor_id', 'ano',
   ];
   public function professor()
   {

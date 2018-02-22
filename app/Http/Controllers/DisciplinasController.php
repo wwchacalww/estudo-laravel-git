@@ -42,6 +42,7 @@ class DisciplinasController extends Controller
           'disciplina' => 'required|min:3|max:10',
           'habilidade' => 'required|max:35',
           'cor' => 'required|min:7|max:7',
+          'sala' => 'max:15',
           'professor_id' => 'required',
           'turmas' => 'required'
       ]);
@@ -100,6 +101,7 @@ class DisciplinasController extends Controller
           'disciplina' => 'required|min:3|max:10',
           'habilidade' => 'required|max:35',
           'cor' => 'required|min:7|max:7',
+          'sala' => 'max:15',
           'professor_id' => 'required',
           'turmas' => 'required'
       ]);
