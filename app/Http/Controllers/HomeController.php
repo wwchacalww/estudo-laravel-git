@@ -56,9 +56,9 @@ class HomeController extends Controller
             $students['Atrasados']++;
             $dis++;
           }
-          if (count($pupilo->ocorrencias) > 0) {
+          if (count($pupilo->ocorrencias->where('created_at', '>', '2018-02-01 00:01:01')->all()) > 0) {
             $ocorre++;
-            foreach ($pupilo->ocorrencias as $ocorrencia) {
+            foreach ($pupilo->ocorrencias->where('created_at', '>', '2018-02-01 00:01:01')->all() as $ocorrencia) {
               $bos[$turma->turno]['total']++;
               foreach ($ocorrencia->indisciplinas as $infracao) {
                 if(array_key_exists($infracao->indisciplina, $bos[$turma->turno]['infracao'])){

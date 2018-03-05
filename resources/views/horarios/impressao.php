@@ -480,7 +480,46 @@ for ($i=2; $i < 7; $i++) {
     }
   }
 }
+$pg = 1;
+foreach ($turmas as $turma) {
+  if($pg == 1){
+    PDF::AddPage('L','A4');
+    $pg = 0;
+  }else {
+    $pg =1;
+  }
+  PDF::SetFont('helvetica','',16);
 
+  PDF::Cell(280, 10, $turma->turma, 0, 1, 'C',0 );
+
+
+  PDF::Cell(30, 10, 'HORÁRIO', 1, 0, 'C', 0 );
+  PDF::Cell(50, 10, 'SEGUNDA', 1, 0, 'C', 0 );
+  PDF::Cell(50, 10, 'TERÇA', 1, 0, 'C', 0 );
+  PDF::Cell(50, 10, 'QUARTA', 1, 0, 'C', 0 );
+  PDF::Cell(50, 10, 'QUINTA', 1, 0, 'C', 0 );
+  PDF::Cell(50, 10, 'SEXTA', 1, 1, 'C', 0 );
+
+  for ($i=1; $i < 7; $i++) {
+    PDF::Cell(30, 10, $i."º", 1, 0, 'C', 0 );
+
+    for ($j=2; $j < 7 ; $j++) {
+      $ln = 0;
+      if($j ==2 ){  $diaSemana = 'Segunda'; }
+      if($j ==3 ){  $diaSemana = 'Terça'; }
+      if($j ==4 ){  $diaSemana = 'Quarta'; }
+      if($j ==5 ){  $diaSemana = 'Quinta'; }
+      if($j ==6 ){  $diaSemana = 'Sexta'; $ln = 1; }
+
+      $sala = $turma->horarios->where('dia', $diaSemana)->where('horario', $i)->first()->disciplina->disciplina." (".
+        $turma->horarios->where('dia', $diaSemana)->where('horario', $i)->first()->disciplina->sala
+      .")";
+      PDF::Cell(50, 10, $sala, 1, $ln, 'C', 0 );
+
+    }
+  }
+
+}
 /*
 PDF::ln();
 PDF::SetFont('helvetica','B',12);

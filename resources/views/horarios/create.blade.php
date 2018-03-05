@@ -52,7 +52,7 @@
                   <select class="form-control" name="turma_id" id="turma_id" @change="turma" v-model="turma_id">
                     <option></option>
                     @foreach($turmas as $turma)
-                      @if($turma->turno == 'Vespertino')
+                      @if($turma->turno == 'Matutino')
                         <option value="{{$turma->id}}">{{$turma->turma}}</option>
                       @endif
                     @endforeach
@@ -102,7 +102,7 @@
               </form>
             </div>
           </div>
-<!--
+
           <table class="table table-responsive table-hover">
             <thead>
               <tr style="border: 1px solid #000;">
@@ -164,7 +164,7 @@
             </tbody>
           </table>
 
--->
+
 
         </div>
         <!-- /.box-body -->

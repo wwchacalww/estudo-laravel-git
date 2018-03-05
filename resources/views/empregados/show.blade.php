@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+ww@extends('layouts.dashboard')
 @section('css')
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
@@ -93,7 +93,7 @@
                      <li class="active"><a href="{{url('empregados/'.$empregado->id.'/namo')}}" target="_blank"><i class="fa fa-medkit"></i>Guia do Namo</a></li>
                      <li><a href="#"><i class="fa fa-plane"></i>Férias</a></li>
                      <li><a href="{{url('empregados/'.$empregado->id.'/avalia')}}" target="_blank"><i class="fa fa-bar-chart"></i>Avaliação de Temporário</a></li>
-                     
+
                    </ul>
                  </li>
 
@@ -123,7 +123,7 @@
                   <div class="form-group">
                     <label for="ano">Ano</label>
                     {!! Form::select('ano',[
-                      '2010'=>'2010',
+
                       '2011'=>'2011',
                       '2012'=>'2012',
                       '2013'=>'2013',
@@ -131,6 +131,7 @@
                       '2015'=>'2015',
                       '2016'=>'2016',
                       '2017'=>'2017',
+                      '2018'=>'2018'
                     ], date('Y'),['class'=>'form-control']) !!}
 
                   </div>

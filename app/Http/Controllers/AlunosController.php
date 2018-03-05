@@ -31,7 +31,7 @@ class AlunosController extends Controller
     public function store(Request $request)
     {
       $this->validate( request(),[
-          'nome' => 'required|regex:/^[a-zA-Z][a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]*$/|min:12|max:25',
+          'nome' => 'required|regex:/^[a-zA-Z][a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]*$/|min:12|max:55',
           'matricula' => 'required|integer|unique:alunos,matricula',
           'dn' => 'required',
           'pai' => 'required|regex:/^[a-zA-Z][a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]*$/',
@@ -58,7 +58,7 @@ class AlunosController extends Controller
     public function update(Aluno $aluno, Request $request)
     {
       $this->validate( request(),[
-          'nome' => 'required|regex:/^[a-zA-Z][a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]*$/|min:12|max:25',
+          'nome' => 'required|regex:/^[a-zA-Z][a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]*$/|min:12|max:55',
           'matricula' => 'required|integer',
           'dn' => 'required',
           'pai' => 'required|regex:/^[a-zA-Z][a-zA-ZáàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]*$/',
