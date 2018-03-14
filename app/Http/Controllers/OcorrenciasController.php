@@ -21,7 +21,7 @@ class OcorrenciasController extends Controller
     {
 
         $indisciplinas = Indisciplina::whereNotNull('base')->orderBy('base')->get();
-        $ocorrencias = Ocorrencia::where('created_at','>','2017-11-01 00:00:01')->orderBy('created_at','desc')->get();
+        $ocorrencias = Ocorrencia::where('created_at','>','2018-01-01 00:00:01')->orderBy('created_at','desc')->get();
         //Dados
         $dados['total'] = 0;
         $dados['Matutino']['qnt'] = 0;
@@ -121,8 +121,8 @@ class OcorrenciasController extends Controller
     public function edit(Ocorrencia $ocorrencia)
     {
       $indisciplinas = Indisciplina::whereNotNull('base')->orderBy('base')->get();
-      $ocorrencias = Ocorrencia::where('created_at','<','2018-01-01 00:00:01')->orderBy('created_at','desc')->get();
-      $cargas = Carga::all();
+      $ocorrencias = Ocorrencia::where('created_at','>','2018-01-01 00:00:01')->orderBy('created_at','desc')->get();
+      $cargas = Carga::where('created_at','>', date('Y'))->get();
       $equipes = Equipe::whereNotNull('empregado_id')->get();
       return view('disciplinar.edit',['ocorrencias'=>$ocorrencias, 'indisciplinas'=>$indisciplinas, 'base' => 0,  'cargas' => $cargas, 'equipes'=>$equipes, 'bo'=>$ocorrencia]);
     }
@@ -139,7 +139,6 @@ class OcorrenciasController extends Controller
       $this->validate( request(),[
           'alunos' => 'required',
           'created_at' => 'required',
-          'professor_id' =>'required|integer',
           'equipe_id' => 'required|integer',
           'tipo' => 'required',
           'indisciplinas' => 'required',

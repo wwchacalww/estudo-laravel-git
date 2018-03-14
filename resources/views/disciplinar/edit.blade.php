@@ -177,17 +177,71 @@
         <!-- /.box-tools -->
       </div>
       <div class="box-body">
-        <table class="table table-bordered table-striped" id="ocorrencias_table">
+        <table class="table table-bordered  table-striped" id="ocorrencias_table">
           <thead>
-            <tr>
+            {{-- <tr>
               <th>Data</th>
               <th>Ocorrência</th>
               <th>Alunos</th>
+            </tr> --}}
+            <tr>
+              <th>Data</th>
+              <th>created_at</th>
+              <th width="40%">Alunos</th>
+              <th>Ocorrência</th>
+              <th>Opções</th>
             </tr>
           </thead>
           <tbody>
             @foreach($ocorrencias as $ocorrencia)
               <tr>
+                <td>{{ $ocorrencia->created_at }}</td>
+                <td>{{ $ocorrencia->created_at }}</td>
+                <td>
+                  @if(count($ocorrencia->alunos) == 1)
+                    <?php
+
+                      $telefones = str_replace('#', ', ', $ocorrencia->alunos[0]->telefone);
+                      $estudante[$ocorrencia->id][] = ['nome'=>$ocorrencia->alunos[0]->nome, 'fone' => $telefones ];
+
+                     ?>
+                    <a href="{{url('alunos/'.$ocorrencia->alunos[0]->id.'/show')}}">{{ $ocorrencia->alunos[0]->nome}} - {{$ocorrencia->alunos[0]->turma->turma}}</a>
+                  @elseif(count($ocorrencia->alunos) > 1)
+                    <dl>
+                      <dt><i class="fa fa-arrow-down"></i>&nbsp; Vários Alunos</dt>
+                    @foreach($ocorrencia->alunos as $aluno)
+                      <?php
+
+                        $telefones = str_replace('#', ', ', $aluno->telefone);
+                        $estudante[$ocorrencia->id][] = ['nome'=>$aluno->nome, 'fone' => $telefones ];
+
+                       ?>
+                      <dd><a href="{{url('alunos/'.$aluno->id.'/show')}}">{{$aluno->nome}} - {{$aluno->turma->turma}}</a></dd>
+                    @endforeach
+                    </dl>
+                  @endif
+                </td>
+                <td style="vertical-align: middle" class="{{ $ocorrencia->tipo == 'Suspensão' ? 'text-danger' : 'text-warning' }}">{{ $ocorrencia->tipo }}</td>
+                <td>
+                  <modal
+                    v-if="showModal"
+                    @close="showModal = false"
+                    titulo="{{$ocorrencia->tipo}}"
+                    identifica="meOcorre{{$ocorrencia->id}}"
+                    descricao="{{$ocorrencia->descricao}}"
+
+                    :estudantes=' <?php echo json_encode($estudante[$ocorrencia->id]); ?>'
+                  ></modal>
+                  <a href="{{url('ocorrencias/'.$ocorrencia->id.'/print')}}" target="_blank" class="btn btn-xs btn-primary">  <i class="fa fa-print"></i> | Imprimir</a>
+                  @if(Auth::user()->hasPermission('update.disciplinar'))
+                      &nbsp;<a href="{{url('ocorrencias/'.$ocorrencia->id.'/edit')}}" class="btn btn-xs btn-danger"> <i class="fa fa-edit"> | Editar</i></a>
+                  @endif
+                  <button @click="showModal = true" type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#meOcorre{{$ocorrencia->id}}">
+                  <i class="fa fa-eye"></i> | Exibir
+                  </button>
+                </td>
+              </tr>
+              {{-- <tr>
                 <td class="text-center" style="vertical-align: middle">
                   {{ Carbon::parse($ocorrencia->created_at)->format('d/m/Y') }}
                 </td>
@@ -204,9 +258,7 @@
                 <td colspan="3">
                   <div class="box-tools pull-right">
                     <a href="{{url('ocorrencias/'.$ocorrencia->id.'/print')}}" target="_blank">  <i class="fa fa-print"></i></a>
-                    @if(Auth::user()->hasPermission('update.disciplinar'))
-                        <a href="{{url('ocorrencias/'.$ocorrencia->id.'/edit')}}"> <i class="fa fa-edit"></i></a>
-                    @endif
+
 
 
                   </div>
@@ -218,10 +270,8 @@
                     <dt>Descrição</dt>
                     <dd>{{ $ocorrencia->descricao}}</dd>
                   </dl>
-
-
                 </td>
-              </tr>
+              </tr> --}}
             @endforeach
           </tbody>
         </table>
