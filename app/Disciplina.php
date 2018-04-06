@@ -33,4 +33,9 @@ class Disciplina extends Model
   {
     return $this->hasMany('App\Rendimento');
   }
+
+  public function reagrupamentos()
+  {
+    return $this->hasMany('App\Reagrupamento');
+  }
 }

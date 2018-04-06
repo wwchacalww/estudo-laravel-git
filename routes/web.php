@@ -119,3 +119,16 @@ Route::group(['as'=>'rendimentos.', 'prefix'=> 'rendimentos', 'middleware' =>['a
   Route::post('store', ['as'=>'store', 'uses'=>'RendimentosController@store', 'can'=>'create.aluno']);
   Route::get('', ['as'=>'index', 'uses'=>'RendimentosController@index', 'can'=>'view.aluno']);
 });
+
+//Professor
+Route::group(['as'=>'professor.','prefix'=>'professor', 'middleware' => ['auth', 'acl']], function(){
+  Route::get('', ['as'=>'index', 'uses'=>'ProfessorsController@professor', 'is'=>'professor']);
+  Route::get('turma', ['as'=>'turma', 'uses'=>'ReagrupamentosController@turma', 'is'=>'professor']);
+  Route::get('{reagrupamento}/reagrupar', ['as'=>'reagrupar', 'uses'=>'ReagrupamentosController@reagrupar', 'is'=>'professor']);
+});
+
+//Pedagógio
+Route::group(['as'=>'pedagogico.','prefix'=>'pedagogico', 'middleware' => ['auth', 'acl']], function(){
+  Route::get('',['as'=>'index','uses'=>'RequisitosController@index', 'can'=>'view.requisito']);
+  Route::post('store', ['as'=>'requisitos.store', 'uses' => 'RequisitosController@store', 'can'=>'create.requisito']);
+});

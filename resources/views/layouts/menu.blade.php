@@ -88,6 +88,20 @@
           </a>
         </li>
       @endif
+      <!-- Menu Pedagógico -->
+      @if(Auth::check() && Auth::user()->isRole('administrador|diretor|administrativo'))
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-file-text"></i> <span>Pedagógico</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ route('pedagogico.index')}}"><i class="fa fa-list"></i> Conteúdo Programático</a></li>
+          </ul>
+        </li>
+      @endif
       <!-- Menu Horario -->
       @if(Auth::check() && Auth::user()->hasPermission('view.servidor'))
         <li class="treeview">

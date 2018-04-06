@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Professor;
 use Illuminate\Http\Request;
+use Auth;
 
 class ProfessorsController extends Controller
 {
@@ -16,6 +17,21 @@ class ProfessorsController extends Controller
     {
         $professors = Professor::all();
         return view('professors.index',['professors'=>$professors]);
+    }
+
+    /**
+     * Página pessoal do Professor
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function professor()
+    {
+      if (Auth::check() && !Auth::user()->isRole('professor')) {
+        return redirect()->route('home');
+      }
+        $professor = Professor::where('empregado_id', Auth::user()->empregado['id'])->first();
+        $requisitos = \App\Requisito::where('habilidade', $professor->habilidade)->orderBy('etapa', 'serie')->get();
+        return view('professors.home',['professor'=>$professor, 'requisitos' => $requisitos]);
     }
 
     /**

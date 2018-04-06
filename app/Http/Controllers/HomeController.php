@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Turma;
 use Carbon;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -15,6 +16,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+      if (Auth::check() && Auth::user()->isRole('professor')) {
+        return redirect()->route('professor.index');
+      }else{
       $turmas = Turma::where('ano', date('Y'))->get();
       $students['Total'] = 0;
       $students['Matutino']['total']= 0;
@@ -103,7 +107,9 @@ class HomeController extends Controller
       arsort($bos['Matutino']['base']);
       arsort($bos['Vespertino']['infracao']);
       arsort($bos['Vespertino']['base']);
-      return view('welcome',['turmas'=>$turmas, 'students'=>$students, 'chart' => $chart, 'bos' => $bos ]);
+
+        return view('welcome',['turmas'=>$turmas, 'students'=>$students, 'chart' => $chart, 'bos' => $bos ]);
+      }
 
     }
 
