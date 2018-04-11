@@ -15,7 +15,7 @@ class RequisitosController extends Controller
     public function index()
     {
         $requisitos = Requisito::where('created_at', '>', '2018-01-01')->orderBy('habilidade')->get();
-        $habilidades = ['Artes', 'Ciências', 'Educação Física', 'Geografia', 'História', 'Inglês', 'Matemática', 'Português'];
+        $habilidades = ['Artes', 'Ciências Naturais', 'Educação Física', 'Geografia', 'História', 'Inglês', 'Matemática', 'Português'];
         return view('pedagogico.index', ['requisitos' => $requisitos, 'habilidades' =>$habilidades]);
     }
 

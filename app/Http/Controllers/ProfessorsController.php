@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Professor;
+use App\Horario;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -33,6 +34,41 @@ class ProfessorsController extends Controller
         $requisitos = \App\Requisito::where('habilidade', $professor->habilidade)->orderBy('etapa', 'serie')->get();
         return view('professors.home',['professor'=>$professor, 'requisitos' => $requisitos]);
     }
+
+    /**
+     * Página horario do Professor
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function horario()
+    {
+      if (Auth::check() && !Auth::user()->isRole('professor')) {
+        return redirect()->route('home');
+      }
+        $professor = Professor::where('empregado_id', Auth::user()->empregado['id'])->first();
+        // Montando o horário
+        foreach($professor->cargas as $carga){
+          if($carga->created_at > "2018-01-01 00:01:01"){
+            for ($i=1; $i < 7 ; $i++) {
+              $cargas[$carga->id][$i] = ['Segunda' => '', 'Terça' => '', 'Quarta' => '', 'Quinta' => '', 'Sexta' => '' ];
+            }
+
+            // Preenchendo o horario
+            foreach ($carga->disciplinas as $disciplina){
+
+              foreach($disciplina->horarios as $hora){
+                  $cargas[$carga->id][$hora->horario][$hora->dia]= substr($hora->turma->turma, 0, 5)."($disciplina->disciplina)";
+              }
+            }
+          }
+        }
+
+
+
+        // return $cargas;
+        return view('professors.horario',['professor'=>$professor, 'cargas' => $cargas ]);
+    }
+
 
     /**
      * Show the form for creating a new resource.

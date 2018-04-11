@@ -43,14 +43,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">CEF507</a>
+          <a class="navbar-brand" href="{{url('professor')}}">CEF507</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Conteúdo Programático</a></li>
+            <li class="active"><a href="{{url('professor')}}">Conteúdo Programático</a></li>
             <li><a href="#">Turmas</a></li>
-            <li><a href="#">Reagrupamento</a></li>
-            <li><a href="#">Horário</a></li>
+            <li><a href="{{url('professor')}}">Reagrupamento</a></li>
+            <li><a href="{{url('professor/horario')}}">Horário</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown navbar-right">

@@ -125,6 +125,7 @@ Route::group(['as'=>'professor.','prefix'=>'professor', 'middleware' => ['auth',
   Route::get('', ['as'=>'index', 'uses'=>'ProfessorsController@professor', 'is'=>'professor']);
   Route::get('turma', ['as'=>'turma', 'uses'=>'ReagrupamentosController@turma', 'is'=>'professor']);
   Route::get('{reagrupamento}/reagrupar', ['as'=>'reagrupar', 'uses'=>'ReagrupamentosController@reagrupar', 'is'=>'professor']);
+  Route::get('horario', ['as'=>'horario', 'uses'=>'ProfessorsController@horario', 'is'=>'professor']);
 });
 
 //Pedagógio

@@ -116,7 +116,7 @@
                   <label for="carga">Habilidade</label>
                   <select class="form-control select2" data-placeholder="Selecione o Bismestre" style="width: 100%;" name="habilidade" required="required">
                       <option value="Artes">Artes</option>
-                      <option value="Ciências">Ciências</option>
+                      <option value="Ciências Naturais">Ciências</option>
                       <option value="Educação Física">Educação Física</option>
                       <option value="Geografia">Geografia</option>
                       <option value="História">História</option>
