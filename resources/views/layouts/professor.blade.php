@@ -48,7 +48,7 @@
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="active"><a href="{{url('professor')}}">Conteúdo Programático</a></li>
-            <li><a href="#">Turmas</a></li>
+            <li><a href="{{url('professor/turmas')}}">Turmas</a></li>
             <li><a href="{{url('professor')}}">Reagrupamento</a></li>
             <li><a href="{{url('professor/horario')}}">Horário</a></li>
           </ul>

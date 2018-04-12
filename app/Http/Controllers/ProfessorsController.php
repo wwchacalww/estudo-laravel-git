@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Professor;
 use App\Horario;
+use App\Turma;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -69,6 +70,27 @@ class ProfessorsController extends Controller
         return view('professors.horario',['professor'=>$professor, 'cargas' => $cargas ]);
     }
 
+    /**
+     * Lista de turmas
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function turmas()
+    {
+        $professor = Professor::where('empregado_id', Auth::user()->empregado['id'])->first();
+        return view('professors.turmas', ['professor'=>$professor]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Professor  $professor
+     * @return \Illuminate\Http\Response
+     */
+    public function showturma(Turma $turma)
+    {
+        return view('professors.showturma', ['turma' => $turma]);
+    }
 
     /**
      * Show the form for creating a new resource.
