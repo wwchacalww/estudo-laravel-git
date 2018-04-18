@@ -107,6 +107,31 @@ class ProfessorsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function relatorio()
+    {
+      if (Auth::check() && !Auth::user()->isRole('professor')) {
+        return redirect()->route('home');
+      }
+      $professor = Professor::where('empregado_id', Auth::user()->empregado['id'])->first();
+      $requisitos = \App\Requisito::where('habilidade', $professor->habilidade)->orderBy('etapa', 'serie')->get();
+      $series = [];
+      foreach ($professor->disciplinas->where('ano', date('Y')) as $disciplina) {
+        if ($disciplina->habilidade == $professor->habilidade) {
+          foreach ($disciplina->turmas as $turma) {
+            if(!in_array($turma->serie, $series)){
+              $series[] = $turma->serie;
+            }
+          }
+        }
+      }
+      return view('professors.relatorio',['professor'=>$professor, 'requisitos' => $requisitos, 'series' => $series]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         //

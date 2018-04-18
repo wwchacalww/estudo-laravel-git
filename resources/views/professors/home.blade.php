@@ -34,7 +34,9 @@
                 @foreach($professor->disciplinas->where('ano', date('Y')) as $disciplina)
                   @if($disciplina->habilidade == $habilidade)
                     @foreach($disciplina->turmas as $turma)
-                      <dd><a href="{{ action('ReagrupamentosController@turma', ['turma' => $turma->id, 'disciplina' => $disciplina->id, 'requisito' => $requisito->id])}}" class="btn btn-primary">{{ $turma->turma}}</a></dd><dd>---</dd>
+                      @if($turma->serie == $requisito->serie)
+                        <dd><a href="{{ action('ReagrupamentosController@turma', ['turma' => $turma->id, 'disciplina' => $disciplina->id, 'requisito' => $requisito->id])}}" class="btn btn-primary">{{ $turma->turma}}</a></dd><dd>---</dd>
+                      @endif
                     @endforeach
                   @endif
                 @endforeach

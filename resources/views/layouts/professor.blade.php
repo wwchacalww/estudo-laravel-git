@@ -49,7 +49,13 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="{{url('professor')}}">Conteúdo Programático</a></li>
             <li><a href="{{url('professor/turmas')}}">Turmas</a></li>
-            <li><a href="{{url('professor')}}">Reagrupamento</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reagrupamento<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="{{url('professor')}}">Reagrupar</a></li>
+                <li><a href="{{url('professor/relatorio')}}">Relatório</a></li>
+              </ul>
+            </li>
             <li><a href="{{url('professor/horario')}}">Horário</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
