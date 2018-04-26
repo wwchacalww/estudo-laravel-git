@@ -113,4 +113,10 @@ class TurmasController extends Controller
       }
       return response()->view('turmas.atrasados',['turmas'=>$turmas, 'atrasados'=>$atrasados])->header('Content-Type', 'application/pdf');
     }
+
+    // Lista de Turma para controle de camisas do interclasse
+    public function printInterclasse(Turma $turma)
+    {
+      return response()->view('turmas.printinterclasse', ['turma'=>$turma])->header('Content-Type', 'application/pdf');
+    }
 }

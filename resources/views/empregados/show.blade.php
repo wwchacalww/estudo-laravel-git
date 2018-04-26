@@ -1,4 +1,4 @@
-ww@extends('layouts.dashboard')
+@extends('layouts.dashboard')
 @section('css')
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">

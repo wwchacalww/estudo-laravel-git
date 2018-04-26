@@ -40,20 +40,20 @@
             @if($turma->turno == 'Matutino')
               <div class="panel box box-primary">
                 <div class="box-header with-border">
-                  <h4 class="box-title">
-                    <a data-toggle="collapse" data-parent="#accordion-mat" href="#turma{{$turma->id}}">
-                      {{$turma->turma}}
-                    </a>
-                  </h4>
-                  <p class="pull-right"><font class="text-light-blue">
-                    {{ count($turma->alunos) }} alunos</font>&nbsp;&nbsp;&nbsp;
-                    @if($atrasados[$turma->id] == 1)
-                      <font class="text-red">1 atrasado</font>
-                    @elseif($atrasados[$turma->id] > 1)
-                      <font class="text-red">{{$atrasados[$turma->id]}} atrasado</font>
-                    @endif
-                  </p>
-
+                    <h4 class="box-title">
+                      <a data-toggle="collapse" data-parent="#accordion-mat" href="#turma{{$turma->id}}">
+                        {{$turma->turma}}
+                      </a>
+                      &nbsp;<a href="{{ url('turmas/'.$turma->id.'/printInterclasse')}}" target="_blank"><i class="fa fa-print"></i></a>
+                    </h4>
+                    <p class="pull-right"><font class="text-light-blue">
+                      {{ count($turma->alunos) }} alunos</font>&nbsp;&nbsp;&nbsp;
+                      @if($atrasados[$turma->id] == 1)
+                        <font class="text-red">1 atrasado</font>
+                      @elseif($atrasados[$turma->id] > 1)
+                        <font class="text-red">{{$atrasados[$turma->id]}} atrasado</font>
+                      @endif
+                    </p>
                 </div>
                 <div id="turma{{$turma->id}}" class="panel-collapse collapse">
                   <div class="box-body">
@@ -66,7 +66,7 @@
                       </tr>
                       </thead>
                       <tbody>
-                        @foreach($turma->alunos as $aluno)
+                        @foreach($turma->alunos->sortby('nome') as $aluno)
                           <tr>
                             <td><a href="{{ url('alunos/'.$aluno->id.'/show')}}">{{$aluno->nome}}</a> </td>
                             <?php
@@ -129,6 +129,7 @@
                     <a data-toggle="collapse" data-parent="#accordion-mat" href="#turma{{$turma->id}}">
                       {{$turma->turma}}
                     </a>
+                    &nbsp;<a href="#" target="_blank"><i class="fa fa-print"></i></a>
                   </h4>
                   <p class="pull-right"><font class="text-light-blue">
                     {{ count($turma->alunos) }} alunos</font>&nbsp;&nbsp;&nbsp;
@@ -137,6 +138,7 @@
                     @elseif($atrasados[$turma->id] > 1)
                       <font class="text-red">{{$atrasados[$turma->id]}} atrasado</font>
                     @endif
+
                   </p>
 
                 </div>
@@ -151,7 +153,7 @@
                       </tr>
                       </thead>
                       <tbody>
-                        @foreach($turma->alunos as $aluno)
+                        @foreach($turma->alunos->sortby('nome') as $aluno)
                           <tr>
                             <td><a href="{{ url('alunos/'.$aluno->id.'/show')}}">{{$aluno->nome}}</a></td>
                             <?php
