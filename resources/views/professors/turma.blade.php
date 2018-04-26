@@ -18,7 +18,7 @@
 
       <!-- List group -->
       <div class="list-group">
-        @foreach($turma->alunos as $aluno)
+        @foreach($turma->alunos->sortBy('nome') as $aluno)
           <?php
           $status = $aluno->reagrupamentos->where('disciplina_id', $disciplina->id)->where('requisito_id', $requisito->id)->first();
 
