@@ -45,6 +45,7 @@
                         {{$turma->turma}}
                       </a>
                       &nbsp;<a href="{{ url('turmas/'.$turma->id.'/printInterclasse')}}" target="_blank"><i class="fa fa-print"></i></a>
+                      &nbsp;<a href="{{ url('turmas/'.$turma->id.'/carometro')}}"><i class="fa fa-camera-retro"></i></a>
                     </h4>
                     <p class="pull-right"><font class="text-light-blue">
                       {{ count($turma->alunos) }} alunos</font>&nbsp;&nbsp;&nbsp;
@@ -130,6 +131,7 @@
                       {{$turma->turma}}
                     </a>
                     &nbsp;<a href="#" target="_blank"><i class="fa fa-print"></i></a>
+                    &nbsp;<a href="{{ url('turmas/'.$turma->id.'/carometro')}}"><i class="fa fa-camera-retro"></i></a>
                   </h4>
                   <p class="pull-right"><font class="text-light-blue">
                     {{ count($turma->alunos) }} alunos</font>&nbsp;&nbsp;&nbsp;

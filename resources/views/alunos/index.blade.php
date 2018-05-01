@@ -77,7 +77,11 @@
                        <!-- Add the bg color to the header using any of the bg-* classes -->
                        <div class="widget-user-header bg-blue">
                          <div class="widget-user-image">
-                           <img class="img-circle" src="{{ asset('/dist/img/user7-128x128.jpg')}}" alt="User Avatar">
+                           @if( File::exists( public_path().'/fotos/'.$aluno->matricula.'.jpg'))
+                            <img class="img-circle" src="{{ asset('fotos/'.$aluno->matricula.'.jpg')}}" alt="{{$aluno->nome}}">
+                           @else
+                            <img class="img-circle" src="{{ asset('img/semfoto.jpg')}}" alt="{{$aluno->nome}}">
+                           @endif
                          </div>
                          <!-- /.widget-user-image -->
                           <a href="{{url('alunos/'.$aluno->id.'/show')}}" style="color:#FFF"><h3 class="widget-user-username">  {{$aluno->nome}}</h3></a>
@@ -104,7 +108,11 @@
                        <!-- Add the bg color to the header using any of the bg-* classes -->
                        <div class="widget-user-header bg-blue">
                          <div class="widget-user-image">
-                           <img class="img-circle" src="{{ asset('/dist/img/user7-128x128.jpg')}}" alt="User Avatar">
+                           @if( File::exists( public_path().'/fotos/'.$aluno->matricula.'.jpg'))
+                            <img class="img-circle" src="{{ asset('fotos/'.$aluno->matricula.'.jpg')}}" alt="{{$aluno->nome}}">
+                           @else
+                            <img class="img-circle" src="{{ asset('img/semfoto.jpg')}}" alt="{{$aluno->nome}}">
+                           @endif
                          </div>
                          <!-- /.widget-user-image -->
                          <a href="{{url('alunos/'.$aluno->id.'/show')}}" style="color:#FFF"><h3 class="widget-user-username">{{$aluno->nome}}</h3></a>

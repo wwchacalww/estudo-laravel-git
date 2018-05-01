@@ -31,75 +31,93 @@
 <div class="row">
   <!-- Coluna Esquerda -->
   <div class="col-md-6">
-    <div class="box box-primary">
-      <div class="box-header with-border">
-        <h3 class="box-title">{{$aluno->nome}} - [ {{ $aluno->matricula }} ]</h3>
-          <a href="{{url('alunos/'.$aluno->id.'/relatorio')}}" target="_blank" class="pull-right btn btn-warning btn-xs"> <i class="fa fa-list-ul"></i> | Relatório</a>
-        @if(Auth::check() && Auth::user()->hasPermission('update.aluno'))
-          <a href="{{url('alunos/'.$aluno->id.'/edit')}}" class="pull-right btn btn-info btn-xs"> <i class="fa fa-edit"></i> | Editar</a>
-        @endif
-      </div>
-      <!-- /.box-header -->
-        <div class="box-body">
-          <dl class="dl-horizontal">
-            @if($aluno->turma != 'NULL')
-              <dt>Turma</dt>
-              <dd>
-                {{ $aluno->turma->turma}}
-              </dd>
-            @endif
 
-            <dt>Data de Nascimento</dt>
-            <dd>
-              @if($aluno->turma == NULL)
-                {{ $dn->formatLocalized('%A %d de %B de %Y')}}
-              @elseif($aluno->turma->serie == '6º Ano' && $dn->age > 12)
-                <p class="text-danger">
-                  {{ $dn->formatLocalized('%A %d de %B de %Y')}}, {{ $dn->age}} anos, {{ ($dn->age - 11) }} anos atrasado
-                </p>
-              @elseif($aluno->turma->serie == '7º Ano' && $dn->age > 13)
-                <p class="text-danger">
-                  {{ $dn->formatLocalized('%A %d de %B de %Y')}}, {{ $dn->age}} anos, {{ ($dn->age - 12) }} anos atrasado
-                </p>
-              @elseif($aluno->turma->serie == '8º Ano' && $dn->age > 14)
-                <p class="text-danger">
-                  {{ $dn->formatLocalized('%A %d de %B de %Y')}}, {{ $dn->age}} anos, {{ ($dn->age - 13) }} anos atrasado
-                </p>
-              @elseif($aluno->turma->serie == '9º Ano' && $dn->age > 15)
-                <p class="text-danger">
-                  {{ $dn->formatLocalized('%A %d de %B de %Y')}}, {{ $dn->age}} anos, {{ ($dn->age - 14) }} anos atrasado
-                </p>
-              @else
-                <p class="text-info">
-                  {{ $dn->formatLocalized('%A %d de %B de %Y')}}, {{ $dn->age}} anos
-                </p>
-              @endif
-            </dd>
+    <!-- Widget: user widget style 1 -->
+          <div class="box box-widget widget-user-2">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header bg-blue">
+              <div class="widget-user-image">
+                @if(File::exists(public_path().'/fotos/'.$aluno->matricula.'.jpg'))
+                  <img class="img-circle" src="{{asset('fotos/'.$aluno->matricula.'.jpg')}}" alt="{{$aluno->nome}}">
+                @else
+                  <img class="img-circle" src="{{asset('img/semfoto.jpg')}}" alt="{{$aluno->nome}}">
+                @endif
 
-            <dt>Mãe</dt>
-            <dd>{{$aluno->mae}}</dd>
+              </div>
+              <!-- /.widget-user-image -->
+              <h3 class="widget-user-username">{{$aluno->nome}} - [ {{$aluno->matricula}} ]</h3>
+              <h5 class="widget-user-desc">{{$aluno->turma->turma}}</h5>
+            </div>
+            <div class="box-body">
+              <dl class="dl-horizontal">
+                <dt>Opções</dt>
+                <dd>
+                  @if(Auth::check() && Auth::user()->hasPermission('update.aluno'))
+                    <a href="{{url('alunos/'.$aluno->id.'/relatorio')}}" target="_blank" class="btn btn-warning btn-xs"> <i class="fa fa-list-ul"></i> | Relatório</a>
+                    <a href="{{url('alunos/'.$aluno->id.'/edit')}}" class="btn btn-info btn-xs"> <i class="fa fa-edit"></i> | Editar</a>
+                  @endif
 
-            @if($aluno->pai != 'NULL')
-              <dt>Pai</dt>
-              <dd>{{$aluno->pai}}</dd>
-            @endif
+                </dd>
+                @if($aluno->turma != 'NULL')
+                  <dt>Turma</dt>
+                  <dd>
+                    {{ $aluno->turma->turma}}
+                  </dd>
+                @endif
 
-            <dt>CEP</dt>
-            <dd>{{$aluno->cep}}</dd>
+                <dt>Data de Nascimento</dt>
+                <dd>
+                  @if($aluno->turma == NULL)
+                    {{ $dn->formatLocalized('%A %d de %B de %Y')}}
+                  @elseif($aluno->turma->serie == '6º Ano' && $dn->age > 12)
+                    <p class="text-danger">
+                      {{ $dn->formatLocalized('%A %d de %B de %Y')}}, {{ $dn->age}} anos, {{ ($dn->age - 11) }} anos atrasado
+                    </p>
+                  @elseif($aluno->turma->serie == '7º Ano' && $dn->age > 13)
+                    <p class="text-danger">
+                      {{ $dn->formatLocalized('%A %d de %B de %Y')}}, {{ $dn->age}} anos, {{ ($dn->age - 12) }} anos atrasado
+                    </p>
+                  @elseif($aluno->turma->serie == '8º Ano' && $dn->age > 14)
+                    <p class="text-danger">
+                      {{ $dn->formatLocalized('%A %d de %B de %Y')}}, {{ $dn->age}} anos, {{ ($dn->age - 13) }} anos atrasado
+                    </p>
+                  @elseif($aluno->turma->serie == '9º Ano' && $dn->age > 15)
+                    <p class="text-danger">
+                      {{ $dn->formatLocalized('%A %d de %B de %Y')}}, {{ $dn->age}} anos, {{ ($dn->age - 14) }} anos atrasado
+                    </p>
+                  @else
+                    <p class="text-info">
+                      {{ $dn->formatLocalized('%A %d de %B de %Y')}}, {{ $dn->age}} anos
+                    </p>
+                  @endif
+                </dd>
 
-            <dt>Endereço</dt>
-            <dd>{{$aluno->endereco}}</dd>
+                <dt>Mãe</dt>
+                <dd>{{$aluno->mae}}</dd>
 
-            <dt>Telefone</dt>
-            <dd>{{ $aluno->telefone}}</dd>
+                @if($aluno->pai != 'NULL')
+                  <dt>Pai</dt>
+                  <dd>{{$aluno->pai}}</dd>
+                @endif
 
-          </dl>
+                <dt>CEP</dt>
+                <dd>{{$aluno->cep}}</dd>
+
+                <dt>Endereço</dt>
+                <dd>{{$aluno->endereco}}</dd>
+
+                <dt>Telefone</dt>
+                <dd>{{ $aluno->telefone}}</dd>
+
+              </dl>
 
 
-        </div>
-        <!-- /.box-body -->
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.widget-user -->
 
-    </div>
+
 
     {{-- Se tiver Ocorrencias --}}
     @if(count($aluno->ocorrencias) > 0)
@@ -144,7 +162,7 @@
     @endif
 
     {{-- Se Tiver notas --}}
-    @if(count($aluno->rendimentos) > 0)
+    @if(count($aluno->rendimentos->where('created_at', '>', '2018-01-01 00:01:01')) > 0)
       <div class="box box-info">
         <div class="box-header with-border">
           <h3 class="box-title">Boletim</h3>

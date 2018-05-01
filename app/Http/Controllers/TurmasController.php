@@ -33,6 +33,7 @@ class TurmasController extends Controller
     {
       return view('turmas.show');
     }
+
     public function chart(){
       $turmas = Turma::where('ano', date('Y'))->get();
       $students['Total'] = 0;
@@ -118,5 +119,11 @@ class TurmasController extends Controller
     public function printInterclasse(Turma $turma)
     {
       return response()->view('turmas.printinterclasse', ['turma'=>$turma])->header('Content-Type', 'application/pdf');
+    }
+
+    // carometro
+    public function carometro(Turma $turma)
+    {
+      return view('turmas.carometro', ['turma' => $turma]);
     }
 }
