@@ -72,7 +72,7 @@ Route::group(['as'=>'equipes.','prefix'=>'equipes','middleware'=>['auth','acl']]
   Route::get('',['as'=>'index', 'uses'=>'EquipesController@index','is'=>'administrador|diretor|administrativo']);
   Route::get('{equipe}/edit', ['as'=>'edit', 'uses'=>'EquipesController@edit','is'=>'administrador|diretor|administrativo']);
   Route::put('{equipe}/update',['as'=>'update', 'uses' => 'EquipesController@update', 'is'=>'administrador|diretor|administrativo']);
-
+  Route::get('consultaPublicaPrint', ['as'=>'consultaPublicaPrint', 'uses'=>'EquipesController@consultaPublicaPrint', 'can'=>'view.turma']);
 });
 
 //Horario

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Equipe;
+use App\Carga;
 use Illuminate\Http\Request;
 
 class EquipesController extends Controller
@@ -89,4 +90,18 @@ class EquipesController extends Controller
     {
         //
     }
+
+    /**
+     * Lista para Consulta Pública
+     *
+     * @param \App\Equipe $equipe \App\Carga $cargas
+     * @return \Illuminate\Http\Response
+     */
+     public function consultaPublicaPrint()
+     {
+       $equipes = Equipe::all();
+       $cargas = Carga::where('created_at', '>', '2018-01-01 00:01:01')->get();
+
+       return response()->view('equipes.consultaPublicaPrint', ['equipes'=>$equipes, 'cargas'=>$cargas])->header('Content-Type', 'application/pdf');
+     }
 }
