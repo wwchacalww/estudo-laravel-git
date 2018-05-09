@@ -53,7 +53,9 @@
             </li>
             @endforeach
           </ul>
-          <!-- /.users-list -->
+        </div>
+      </div>
+      <!-- /.users-list -->
   </section>
 
 </div>

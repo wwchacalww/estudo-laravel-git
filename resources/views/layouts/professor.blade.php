@@ -12,6 +12,8 @@
 
     <title>Centro de Ensino Fundamental 507 de Samambaia</title>
 
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('dist/css/AdminLTE.min.css') }}">
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
 
