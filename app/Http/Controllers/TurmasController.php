@@ -126,4 +126,10 @@ class TurmasController extends Controller
     {
       return view('turmas.carometro', ['turma' => $turma]);
     }
+
+    // rendimentos
+    public function rendimento(Turma $turma)
+    {
+      return view('turmas.rendimento', ['turma' => $turma]);
+    }
 }

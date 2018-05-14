@@ -44,8 +44,9 @@
                       <a data-toggle="collapse" data-parent="#accordion-mat" href="#turma{{$turma->id}}">
                         {{$turma->turma}}
                       </a>
-                      &nbsp;<a href="{{ url('turmas/'.$turma->id.'/printInterclasse')}}" target="_blank"><i class="fa fa-print"></i></a>
-                      &nbsp;<a href="{{ url('turmas/'.$turma->id.'/carometro')}}"><i class="fa fa-camera-retro"></i></a>
+                      &nbsp;<a href="{{ url('turmas/'.$turma->id.'/printInterclasse')}}" target="_blank"><i class="fa fa-print" title="Imprimir"></i></a>
+                      &nbsp;<a href="{{ url('turmas/'.$turma->id.'/carometro')}}"><i class="fa fa-camera-retro" title="Carômetro"></i></a>
+                      &nbsp;<a href="{{ url('turmas/'.$turma->id.'/rendimento')}}"><i class="fa fa-comments" title="Rendimentos"></i></a>
                     </h4>
                     <p class="pull-right"><font class="text-light-blue">
                       {{ count($turma->alunos) }} alunos</font>&nbsp;&nbsp;&nbsp;
@@ -130,8 +131,9 @@
                     <a data-toggle="collapse" data-parent="#accordion-mat" href="#turma{{$turma->id}}">
                       {{$turma->turma}}
                     </a>
-                    &nbsp;<a href="#" target="_blank"><i class="fa fa-print"></i></a>
-                    &nbsp;<a href="{{ url('turmas/'.$turma->id.'/carometro')}}"><i class="fa fa-camera-retro"></i></a>
+                    &nbsp;<a href="{{ url('turmas/'.$turma->id.'/printInterclasse')}}" target="_blank"><i class="fa fa-print" title="Imprimir"></i></a>
+                    &nbsp;<a href="{{ url('turmas/'.$turma->id.'/carometro')}}"><i class="fa fa-camera-retro" title="Carômetro"></i></a>
+                    &nbsp;<a href="{{ url('turmas/'.$turma->id.'/rendimento')}}"><i class="fa fa-comments" title="Rendimentos"></i></a>
                   </h4>
                   <p class="pull-right"><font class="text-light-blue">
                     {{ count($turma->alunos) }} alunos</font>&nbsp;&nbsp;&nbsp;

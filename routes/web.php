@@ -38,6 +38,7 @@ Route::group(['as'=>'turmas.', 'prefix'=>'turmas','middleware'=>['auth','acl']],
   Route::get('atrasadosPdf',['as'=>'atrasadosPdf', 'uses'=>'TurmasController@atrasadosPdf','can'=>'view.turma']);
   Route::get('{turma}/printInterclasse', ['as'=>'printInterclasse', 'uses'=> 'TurmasController@printInterclasse', 'can'=>'view.turma']);
   Route::get('{turma}/carometro', ['as'=>'carometro', 'uses'=>'TurmasController@carometro', 'can'=>'view.turma']);
+  Route::get('{turma}/rendimento', ['as'=>'rendimento', 'uses'=>'TurmasController@rendimento', 'can'=>'view.turma']);
 });
 
 //Indisciplinas

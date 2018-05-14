@@ -65,8 +65,8 @@
                 $pdi = 'fa-square-o';
                 $pdii = 'fa-square-o';
               ?>
-              @if(count($turma->alunos->first()->rendimentos) > 0)
-                @foreach($turma->alunos->first()->rendimentos as $rendimento)
+              @if(count($turma->alunos->first()->rendimentos->where('created_at', '>', '2018-01-01 00:01:01')->where('created_at', '<', '2018-12-31 00:01:01')) > 0)
+                @foreach($turma->alunos->first()->rendimentos->where('created_at', '>', '2018-01-01 00:01:01')->where('created_at', '<', '2018-12-31 00:01:01') as $rendimento)
                   <?php
                   if($rendimento->disciplina->habilidade == "Artes" && $rendimento->bimestre == 1){ $art = 'fa-check-square-o'; }
                   if($rendimento->disciplina->habilidade == "Ciências Naturais" && $rendimento->bimestre == 1){ $cn = 'fa-check-square-o'; }
@@ -132,8 +132,8 @@
                 $pdi = 'fa-square-o';
                 $pdii = 'fa-square-o';
               ?>
-              @if(count($turma->alunos->first()->rendimentos) > 0)
-                @foreach($turma->alunos->first()->rendimentos as $rendimento)
+              @if(count($turma->alunos->first()->rendimentos->where('created_at', '>', '2018-01-01 00:01:01')->where('created_at', '<', '2018-12-31 00:01:01')) > 0)
+                @foreach($turma->alunos->first()->rendimentos->where('created_at', '>', '2018-01-01 00:01:01')->where('created_at', '<', '2018-12-31 00:01:01') as $rendimento)
                   <?php
                   if($rendimento->disciplina->habilidade == "Artes" && $rendimento->bimestre == 2){ $art = 'fa-check-square-o'; }
                   if($rendimento->disciplina->habilidade == "Ciências Naturais" && $rendimento->bimestre == 2){ $cn = 'fa-check-square-o'; }

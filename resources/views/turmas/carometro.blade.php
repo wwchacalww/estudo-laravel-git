@@ -73,11 +73,8 @@
   </script>
   <!-- Bootstrap 3.3.6 -->
   <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
-
-
   <!-- AdminLTE App -->
   <script src="{{ asset('dist/js/app.min.js') }}"></script>
-  <
   <!-- AdminLTE for demo purposes -->
   <script src="{{ asset('dist/js/demo.js') }}"></script>
 @endsection

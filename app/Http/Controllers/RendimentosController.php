@@ -37,7 +37,7 @@ class RendimentosController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
+     * Ultimo id de 2017 foi 16925
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
