@@ -104,8 +104,8 @@ class AlunosController extends Controller
         $boletim['quarto'][$disciplina] = '';
       }
 
-      if (count($aluno->rendimentos) > 0) {
-        foreach ($aluno->rendimentos as $rendimento) {
+      if (count($aluno->rendimentos->where('created_at', '>','2018-01-01 00:01:01')) > 0) {
+        foreach ($aluno->rendimentos->where('created_at', '>','2018-01-01 00:01:01') as $rendimento) {
           if ($rendimento['bimestre'] == 1) {
             $boletim['primeiro'][$rendimento->disciplina->habilidade]['nota'] = $rendimento->nota;
             $boletim['primeiro'][$rendimento->disciplina->habilidade]['faltas'] = $rendimento->faltas;

@@ -41,7 +41,7 @@ PDF::Cell(190, 4, 'SECRETARIA DE ESTADO DE EDUCAÇÃO', 0, 1, 'C',0 );
 PDF::Cell(190, 4, 'CENTRO DE ENSINO FUNDAMENTAL 507 DE SAMAMBAIA', 0, 1, 'C',0 );
 PDF::ln();
 PDF::SetFont('times','B',12);
-PDF::Cell(190, 4, 'RELATÓRIO DISCIPLINAR', 0, 1, 'C',0 );
+PDF::Cell(190, 4, 'RELATÓRIO DISCIPLINAR - '.date('Y'), 0, 1, 'C',0 );
 PDF::ln();
 PDF::SetFont('times','B',10);
 
@@ -170,6 +170,8 @@ PDF::Cell(190,5, '* Vale lembrar que uma ocorrência pode conter várias infraç
 PDF::ln();
 
 //Tipos de infrações
+// Começando o PDF
+PDF::AddPage('P','A4');
 PDF::SetFont('times','B',10);
 PDF::Cell(160, 5, 'Tipos de Ocorrências', 1, 0, 'C', 1);
 PDF::Cell(30, 5, 'Ocorrências', 1, 1, 'C', 0);

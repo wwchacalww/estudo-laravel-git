@@ -126,7 +126,7 @@
           <h3 class="box-title">Ocorrencias</h3>
         </div>
         <div class="box-body">
-          @foreach($aluno->ocorrencias as $ocorrencia)
+          @foreach($aluno->ocorrencias->sortByDesc('created_at') as $ocorrencia)
             <blockquote>
               <p>
                 {{ $ocorrencia->tipo}}

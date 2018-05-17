@@ -179,12 +179,12 @@ class OcorrenciasController extends Controller
 
     public function print(Ocorrencia $ocorrencia)
     {
-      return response()->view('disciplinar.print',['ocorrencia'=>$ocorrencia])->header('Content-Type', 'application/pdf');
+      return response()->view('disciplinar.print',['ocorrencia'=>$ocorrencia->where('created_at', '>', date('Y').'-01-01 00:01:01')])->header('Content-Type', 'application/pdf');
     }
 
     public function relatorio()
     {
-      $ocorrencias = Ocorrencia::where('created_at','<','2018-01-01 00:00:01')->orderBy('created_at','desc')->get();
+      $ocorrencias = Ocorrencia::where('created_at','>','2018-01-01 00:00:01')->orderBy('created_at','desc')->get();
       //Dados
       $dados['total']['qnt'] = 0;
       $dados['turno']['Vespertino']['qnt'] = 0;
