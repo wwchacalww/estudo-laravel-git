@@ -133,7 +133,7 @@ Route::group(['as'=>'professor.','prefix'=>'professor', 'middleware' => ['auth',
   Route::get('turmas', ['as'=>'turmas', 'uses'=>'ProfessorsController@turmas', 'is'=>'professor']);
   Route::get('{turma}/showturma', ['as'=>'showturma', 'uses'=>'ProfessorsController@showturma', 'is'=>'professor']);
   Route::get('relatorio', ['as'=>'relatorio', 'uses'=>'ProfessorsController@relatorio', 'is'=>'professor']);
-  Route::get('listaPDF', ['as'=>'listaPDF', 'uses'=>'ProfessorsController@listaPDF', 'can'=>'view.aluno']);
+  Route::get('listaProfessorPDF', ['as'=>'listaProfessorPDF', 'uses'=>'ProfessorsController@listaProfessorPDF', 'can'=>'view.aluno']);
 });
 
 //Pedagógio

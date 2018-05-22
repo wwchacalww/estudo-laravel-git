@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Professor;
 use App\Horario;
 use App\Turma;
+use App\Carga;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -208,9 +209,9 @@ class ProfessorsController extends Controller
       return $professors;
     }
 
-    public function listaPDF()
+    public function listaProfessorPDF()
     {
-      // $professores = Professor::where('')
-      return response()->view('disciplinar.print',['ocorrencia'=>$ocorrencia->where('created_at', '>', date('Y').'-01-01 00:01:01')])->header('Content-Type', 'application/pdf');
+      $cargas = Carga::where('created_at', '>', '2018-01-01 00:01:01')->get();
+      return response()->view('professors.listaProfessorPDF',['cargas'=>$cargas])->header('Content-Type', 'application/pdf');
     }
 }
