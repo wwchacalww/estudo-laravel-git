@@ -207,4 +207,10 @@ class ProfessorsController extends Controller
 
       return $professors;
     }
+
+    public function listaPDF()
+    {
+      // $professores = Professor::where('')
+      return response()->view('disciplinar.print',['ocorrencia'=>$ocorrencia->where('created_at', '>', date('Y').'-01-01 00:01:01')])->header('Content-Type', 'application/pdf');
+    }
 }

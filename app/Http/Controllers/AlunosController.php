@@ -246,4 +246,22 @@ class AlunosController extends Controller
       }
       //return $contents;
     }
+
+    /*
+    **  Declaração de Comparecimento
+    **/
+    public function pdfComparecimento(Request $request)
+    {
+      $data = $request->all();
+      $aluno = Aluno::find($data['aluno']);
+      if ($data['resp'] == 'pai') {
+        $resp = 'o Senhor '.$aluno->pai;
+      }else{
+        $resp = 'a Senhora '.$aluno->mae;
+      }
+
+      return response()->view('alunos.pdfComparecimento',['aluno'=>$aluno, 'resp' => $resp])->header('Content-Type', 'application/pdf');
+
+    }
+
 }

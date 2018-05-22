@@ -93,11 +93,11 @@
                 </dd>
 
                 <dt>Mãe</dt>
-                <dd>{{$aluno->mae}}</dd>
+                <dd><a href="{{action('AlunosController@pdfComparecimento', ['aluno' => $aluno->id, 'resp' => 'mae'])}}" target="_blank">{{$aluno->mae}}</a></dd>
 
                 @if($aluno->pai != 'NULL')
                   <dt>Pai</dt>
-                  <dd>{{$aluno->pai}}</dd>
+                  <dd><a href="{{action('AlunosController@pdfComparecimento', ['aluno' => $aluno->id, 'resp' => 'pai'])}}" target="_blank">{{$aluno->pai}}</a></dd>
                 @endif
 
                 <dt>CEP</dt>
