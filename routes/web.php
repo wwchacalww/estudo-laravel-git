@@ -141,3 +141,9 @@ Route::group(['as'=>'pedagogico.','prefix'=>'pedagogico', 'middleware' => ['auth
   Route::get('',['as'=>'index','uses'=>'RequisitosController@index', 'can'=>'view.requisito']);
   Route::post('store', ['as'=>'requisitos.store', 'uses' => 'RequisitosController@store', 'can'=>'create.requisito']);
 });
+
+//Passivos
+Route::group(['as'=>'passivos.','prefix'=>'passivos', 'middleware' => ['auth', 'acl']], function(){
+  Route::get('',['as'=>'index','uses'=>'PassivosController@index', 'can'=>'view.aluno']);
+  Route::post('consulta', ['as'=>'consulta', 'uses' => 'PassivosController@consulta', 'can'=>'view.aluno']);
+});
