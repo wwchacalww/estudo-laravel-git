@@ -121,6 +121,13 @@ class TurmasController extends Controller
       return response()->view('turmas.printinterclasse', ['turma'=>$turma])->header('Content-Type', 'application/pdf');
     }
 
+    // Lista do interclasse
+    public function interclasse()
+    {
+      $turmas = Turma::where('ano', 2018)->orderBy('turno')->get();
+      return response()->view('turmas.interclasse', ['turmas'=>$turmas])->header('Content-Type', 'application/pdf');
+    }
+
     // carometro
     public function carometro(Turma $turma)
     {
