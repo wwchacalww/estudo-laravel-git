@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Carga;
+use App\Turma;
 use Illuminate\Http\Request;
 
 class CargasController extends Controller
@@ -223,5 +224,20 @@ class CargasController extends Controller
       }
 
       return 'oi';
+    }
+
+    public function conselheiros()
+    {
+      $cargas = Carga::where('created_at', '>', '2018-01-01 00:01:01')->get();
+      $turmas = Turma::where('ano', date('Y'))->orderBy('turno')->get();
+      return view('pedagogico.conselheiros', ['cargas'=>$cargas, 'turmas' => $turmas]);
+    }
+
+    public function conselheirosAdd(Request $request, Carga $carga)
+    {
+      $data = $request->all();
+      $carga->turma_id = $data['turma'];
+      $carga->save();
+      return redirect()->route('pedagogico.conselheiros');
     }
 }

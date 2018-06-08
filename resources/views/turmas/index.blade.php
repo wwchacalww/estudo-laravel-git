@@ -49,7 +49,18 @@
                       &nbsp;<a href="{{ url('turmas/'.$turma->id.'/rendimento')}}"><i class="fa fa-comments" title="Rendimentos"></i></a>
                     </h4>
                     <p class="pull-right"><font class="text-light-blue">
-                      {{ count($turma->alunos) }} alunos</font>&nbsp;&nbsp;&nbsp;
+                      <font class="text-green">
+                        <i class="fa fa-graduation-cap"></i>
+                        <?php
+                        $char = ' ';
+                        foreach($turma->conselheiros as $conselheiro){
+                          $char .= $conselheiro->professor->professor." | ";
+                        }
+                        $char = substr($char, 0, -2);
+                        echo $char;
+                         ?>
+                      </font>&nbsp;&nbsp;&nbsp;
+                      <i class="fa fa-child"></i> {{ count($turma->alunos) }} alunos</font>&nbsp;&nbsp;&nbsp;
                       @if($atrasados[$turma->id] == 1)
                         <font class="text-red">1 atrasado</font>
                       @elseif($atrasados[$turma->id] > 1)
@@ -136,6 +147,17 @@
                     &nbsp;<a href="{{ url('turmas/'.$turma->id.'/rendimento')}}"><i class="fa fa-comments" title="Rendimentos"></i></a>
                   </h4>
                   <p class="pull-right"><font class="text-light-blue">
+                    <font class="text-green">
+                      <i class="fa fa-graduation-cap"></i>
+                      <?php
+                      $char = ' ';
+                      foreach($turma->conselheiros as $conselheiro){
+                        $char .= $conselheiro->professor->professor." | ";
+                      }
+                      $char = substr($char, 0, -2);
+                      echo $char;
+                       ?>
+                    </font>&nbsp;&nbsp;&nbsp;
                     {{ count($turma->alunos) }} alunos</font>&nbsp;&nbsp;&nbsp;
                     @if($atrasados[$turma->id] == 1)
                       <font class="text-red">1 atrasado</font>

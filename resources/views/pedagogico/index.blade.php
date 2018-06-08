@@ -21,7 +21,7 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="{{ route('home') }}"><i class="fa fa-dashboard"></i> Direção</a></li>
-    <li><a href="{{ route('horarios.cargas.index') }}"><i class="fa fa-list"></i> Pedagógico</a></li>
+    <li><a href="#"><i class="fa fa-list"></i> Pedagógico</a></li>
     <li>Conteúdo Programático</li>
   </ol>
 @endsection

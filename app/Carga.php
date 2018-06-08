@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Carga extends Model
 {
   protected $fillable = [
-      'carga', 'ch', 'professor_id',
+      'carga', 'ch', 'professor_id', 'turma_id',
   ];
 
   public function professor()
@@ -24,4 +24,15 @@ class Carga extends Model
   {
       return $this->hasMany('App\Disciplina');
   }
+
+  public function turma()
+  {
+    return $this->belongsTo('App\Turma');
+  }
+
+  public function conselheiro()
+  {
+    return $this->belongsTo('App\Turma', 'turma_id');
+  }
+
 }

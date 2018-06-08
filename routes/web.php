@@ -140,6 +140,8 @@ Route::group(['as'=>'professor.','prefix'=>'professor', 'middleware' => ['auth',
 Route::group(['as'=>'pedagogico.','prefix'=>'pedagogico', 'middleware' => ['auth', 'acl']], function(){
   Route::get('',['as'=>'index','uses'=>'RequisitosController@index', 'can'=>'view.requisito']);
   Route::post('store', ['as'=>'requisitos.store', 'uses' => 'RequisitosController@store', 'can'=>'create.requisito']);
+  Route::get('conselheiros',['as'=>'conselheiros', 'uses'=> 'CargasController@conselheiros', 'is'=>'administrador|diretor|pedagogico']);
+  Route::put('conselheiros/{carga}/add', ['as'=>'conselheiros.add', 'uses'=>'CargasController@conselheirosAdd', 'is'=>'administrador|diretor|pedagogico']);
 });
 
 //Passivos

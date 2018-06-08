@@ -30,4 +30,8 @@ class Turma extends Model
       return $this->hasMany('App\Horario');
     }
 
+    public function conselheiros()
+    {
+      return $this->hasMany('App\Carga');
+    }
 }

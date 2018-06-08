@@ -55,6 +55,8 @@
             <dd>{{$empregado->telefone}}</dd>
             <dt>Email</dt>
             <dd>{{$empregado->email}}</dd>
+            <dt>CPF</dt>
+            <dd>{{$empregado->cpf}}</dd>
             <dt>CH</dt>
             <dd>{{$empregado->ch}}</dd>
             <dt>Função</dt>

@@ -113,6 +113,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ route('pedagogico.index')}}"><i class="fa fa-list"></i> Conteúdo Programático</a></li>
+            <li><a href="{{ route('pedagogico.conselheiros')}}"><i class="fa fa-feed"></i> Conselheiros</a></li>
             <li><a href="{{ route('professor.listaProfessorPDF')}}" target="_blank"><i class="fa fa-users"></i> Lista de Professores</a></li>
           </ul>
         </li>
