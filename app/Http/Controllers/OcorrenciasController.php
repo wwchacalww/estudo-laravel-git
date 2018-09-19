@@ -179,7 +179,8 @@ class OcorrenciasController extends Controller
 
     public function print(Ocorrencia $ocorrencia)
     {
-      return response()->view('disciplinar.print',['ocorrencia'=>$ocorrencia->where('created_at', '>', date('Y').'-01-01 00:01:01')])->header('Content-Type', 'application/pdf');
+
+      return response()->view('disciplinar.print',['ocorrencia'=>$ocorrencia])->header('Content-Type', 'application/pdf');
     }
 
     public function relatorio()

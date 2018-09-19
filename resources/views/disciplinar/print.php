@@ -13,6 +13,8 @@ function dn($date){
 }
 // Trantando a data
 $data = Carbon::parse($ocorrencia->created_at);
+// echo $ocorrencia->created_at;
+
 // $ex = explode ("-", $ocorrencia->data);
 $ex[1] = $data->format('m');
 $dia = $data->format('d');

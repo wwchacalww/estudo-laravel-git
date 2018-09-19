@@ -96,6 +96,14 @@ PDF::writeHTMLCell(110, '', '', '', $direita, 0, 0, 0, true);
 PDF::writeHTMLCell(10, '', '', '', '', 0, 0, 0, true);
 PDF::writeHTMLCell(70, '', '', '', $esquerda, 1, 1, 0, true);
 
+// foto do aluno
+if(File::exists(public_path().'/fotos/'.$aluno->matricula.'.jpg')){
+    PDF::Image(asset('/fotos/'.$aluno->matricula.'.jpg'), 11, 102, 38, 38, '', '', '', false, 300, '', false, false, 1);
+}else{
+    PDF::Image(asset('/img/semfoto.jpg'), 11, 102, 30, 30, '', '', '', false, 300, '', false, false, 1);
+}
+
+
 
 
 // Boletim
